@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto");
 
 body {
+  justify-content: center;
   font-family: Roboto;
   background-color: #eeeeee;
   margin: 0;

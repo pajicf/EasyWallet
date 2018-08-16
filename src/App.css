@@ -27,3 +27,37 @@
   margin-left: 16px;
   margin-top: 110px;
 }
+.box {
+  margin-top: 10%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.wallID {
+  width: 50%;
+  height: 64px;
+  font-size: 64px;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  border-bottom: 4px solid black;
+  border-radius: 64px;
+  padding-left: 16px;
+  color: black;
+  outline: none;
+}
+.buttonsBox {
+  justify-content: center;
+  display: flex;
+  width: 100%;
+  padding-top: 32px;
+}
+.btnL {
+  width: 256px;
+  height: 64px;
+  margin-right: 16px;
+  background-color: #222831;
+  color: white;
+  font-size: 32px;
+  border-radius: 32px;
+  border: none;
+}
