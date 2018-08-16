@@ -1,0 +1,34 @@
+{
+  "name": "app",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
+    "react-icons": "^3.0.5",
+    "react-scripts": "1.1.4"
+  },
+  "scripts": {
+    "start:front": "react-scripts start",
+    "start:back": "nodemon ./BackEnd/server.js",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pajicf/EasyWallet.git"
+  },
+  "author": "MVPkoncar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pajicf/EasyWallet/issues"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.3"
+  }
+}
