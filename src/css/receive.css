@@ -1,2 +1,12 @@
 .receiveBody {
+  background-color: #fd9200;
+  padding: 15px;
+  border-radius: 32px;
+}
+
+.message {
+  background-color: #00adb5;
+  color: #222831;
+  padding: 3px;
+  border-radius: 32px;
 }
