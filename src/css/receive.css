@@ -1,2 +1,17 @@
 .receiveBody {
+  width: 100%;
+  padding: 15px;
+}
+
+.message {
+  color: #00adb5;
+  font-weight: bold;
+  font-size: 25px;
+}
+
+.id {
+  background-color: #eeeeee;
+  border-radius: 32px;
+  color: #393e46;
+  padding: 15px;
 }
