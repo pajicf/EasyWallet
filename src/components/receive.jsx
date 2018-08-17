@@ -9,9 +9,11 @@ export default class Receive extends Component {
 
   render() {
     return (
-      <div className="receiveBody">
-        <p class="message">You need to give this to person paying you!</p>
-        <p className="id">{this.state.walletID}</p>
+      <div>
+        <p className="message">This is your receive address!</p>
+        <div className="receiveBody">
+          <p className="id">{this.state.walletID}</p>
+        </div>
       </div>
     );
   }
