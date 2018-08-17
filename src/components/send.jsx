@@ -5,8 +5,8 @@ export default class send extends Component {
   state = {};
   render() {
     return (
-      <div>
-        <div />a
+      <div className="sendBody">
+        <div>a</div>
       </div>
     );
   }

@@ -58,3 +58,11 @@
   font-size: 16px;
   border: none;
 }
+#sendDisplay,
+#receiveDisplay,
+#transactionsDisplay {
+  color: white;
+  width: 100%;
+  background-color: #222831;
+  min-height: 240px;
+}
