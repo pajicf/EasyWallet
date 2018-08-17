@@ -9,7 +9,7 @@ import Send from "./send";
 
 export default class home extends Component {
   state = {
-    btInEur: ""
+    btInEur: 0
   };
 
   componentDidMount() {
@@ -19,7 +19,8 @@ export default class home extends Component {
   getBitInEuro = () => {
     Axios.get("https://blockchain.info/tobtc?currency=EUR&value=1").then(
       res => {
-        this.setState({ btInEur: res.data });
+        let a = Math.round(1 / res.data);
+        this.setState({ btInEur: a });
       }
     );
   };

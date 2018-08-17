@@ -1,17 +1,52 @@
 import React, { Component } from "react";
 import "../css/send.css";
+import Axios from "axios";
 
 export default class send extends Component {
-  state = {};
+  state = {
+    ammInBTC: 0,
+    btInEur: 0
+  };
+
+  handleChange = () => {
+    let conv =
+      document.getElementById("inputAmountID").value / this.state.btInEur;
+
+    this.setState({ ammInBTC: conv.toFixed(8) });
+  };
+
+  componentDidMount() {
+    this.getBitInEuro();
+  }
+
+  getBitInEuro = () => {
+    Axios.get("https://blockchain.info/tobtc?currency=EUR&value=1").then(
+      res => {
+        let a = Math.round(1 / res.data);
+        this.setState({ btInEur: a });
+      }
+    );
+  };
+
   render() {
     return (
       <div className="sendBody">
-        <input
-          className="inputSendID"
-          placeholder="ID of reciever"
-          type="text"
-        />
-        <input className="inputSendAmount" placeholder="€" type="number" />
+        <div className="inputs">
+          <input
+            className="inputSendID"
+            placeholder="ID of reciever"
+            type="text"
+          />
+          <input
+            id="inputAmountID"
+            className="inputSendAmount"
+            placeholder="€"
+            type="number"
+            onChange={() => this.handleChange()}
+          />
+          <p className="satoshis">Amount in bitcoins: {this.state.ammInBTC}</p>
+          <button className="btnL">Send</button>
+        </div>
       </div>
     );
   }

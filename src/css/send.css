@@ -6,13 +6,13 @@
 }
 .inputSendID {
   height: 48px;
-  width: 50%;
+  width: 100%;
   background-color: #eeeeee;
   border: none;
   font-size: 20px;
   border-radius: 24px;
-  padding-left: 4px;
-  padding-right: 4px;
+  padding-left: 8px;
+  padding-right: 8px;
   outline: none;
 }
 .inputSendAmount {
@@ -23,7 +23,29 @@
   font-size: 20px;
   border-radius: 24px;
   outline: none;
-  padding-left: 4px;
-  padding-right: 4px;
-  margin-left: 4px;
+  padding-left: 8px;
+  padding-right: 8px;
+  margin-top: 8px;
+}
+.inputs {
+  display: flex;
+  flex-wrap: wrap;
+  width: 80%;
+}
+.satoshis {
+  color: #fd9200;
+  border-bottom: 2px solid black;
+  margin-left: 16px;
+}
+.btnL {
+  width: 256px;
+  height: 64px;
+  margin-left: 16px;
+  margin-top: 16px;
+  background-color: #393e46;
+  color: white;
+  font-size: 32px;
+  border-radius: 32px;
+  border: none;
+  outline: none;
 }
