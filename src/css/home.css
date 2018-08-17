@@ -57,7 +57,11 @@
   color: white;
   font-size: 16px;
   border: none;
+  outline: none;
 }
+.buttonBox button:hover {
+    background-color: #006166;
+  }
 #sendDisplay,
 #receiveDisplay,
 #transactionsDisplay {

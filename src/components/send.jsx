@@ -6,7 +6,12 @@ export default class send extends Component {
   render() {
     return (
       <div className="sendBody">
-        <div>a</div>
+        <input
+          className="inputSendID"
+          placeholder="ID of reciever"
+          type="text"
+        />
+        <input className="inputSendAmount" placeholder="€" type="number" />
       </div>
     );
   }
