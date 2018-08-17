@@ -17,9 +17,6 @@
   color: white;
 }
 
-.App-title {
-  font-size: 1.5em;
-}
 .headerText {
   color: #222831;
   font-size: 64px;
@@ -34,7 +31,7 @@
   justify-content: center;
 }
 .wallID {
-  width: 50%;
+  width: 65%;
   height: 64px;
   font-size: 64px;
   background-color: rgba(0, 0, 0, 0);
@@ -42,11 +39,13 @@
   border-bottom: 4px solid black;
   border-radius: 64px;
   padding-left: 16px;
+  padding-right: 16px;
   color: black;
   outline: none;
 }
 .buttonsBox {
   justify-content: center;
+  flex-wrap: wrap;
   display: flex;
   width: 100%;
   padding-top: 32px;
@@ -55,9 +54,11 @@
   width: 256px;
   height: 64px;
   margin-right: 16px;
+  margin-bottom: 16px;
   background-color: #222831;
   color: white;
   font-size: 32px;
   border-radius: 32px;
   border: none;
+  outline: none;
 }

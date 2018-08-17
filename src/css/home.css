@@ -1,0 +1,75 @@
+.home-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 100px;
+}
+
+.home-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  background-color: #222831;
+  padding-left: 10px;
+  color: #eeeeee;
+}
+
+.homeTitle {
+  color: #eeeeee;
+  font-size: 40px;
+  font-weight: bold;
+  margin-left: 16px;
+  margin-top: 60px;
+}
+.btValue {
+  font-size: 18px;
+  height: 100%;
+  width: 150px;
+  padding-top: 16px;
+  margin-left: auto;
+  margin-right: 10px;
+  font-weight: bold;
+}
+.btBalance {
+  font-size: 18px;
+  height: 100%;
+  width: 150px;
+  padding-top: 16px;
+  font-weight: bold;
+}
+.featuresContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 60%;
+  margin: auto;
+  margin-top: 32px;
+  border-radius: 32px;
+  overflow: hidden;
+}
+.buttonBox {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.buttonBox button {
+  width: 33.3333%;
+  height: 64px;
+  background-color: #00adb5;
+  color: white;
+  font-size: 16px;
+  border: none;
+  outline: none;
+}
+.buttonBox button:hover {
+    background-color: #006166;
+  }
+#sendDisplay,
+#receiveDisplay,
+#transactionsDisplay {
+  color: white;
+  width: 100%;
+  background-color: #222831;
+  min-height: 240px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}

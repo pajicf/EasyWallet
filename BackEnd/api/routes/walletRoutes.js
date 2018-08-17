@@ -75,6 +75,9 @@ router.post(`${walletPath}/send`,(req,res)=>{
                 "prv": wallet._wallet.keys[0]
             };
             console.log(signParams.prv);
+          //  var encryptedString = '{"iv":"VncyeOxU/zwkma2AW97buQ==","v":1,"iter":10000,"ks":256,"ts":64,"mode" :"ccm","adata":"","cipher":"aes","salt":"yr1dZrvacDM=","ct":"3vJ8N8mVALEasC Htw1eWgoLy2Oh3yvNEiEdToJ/R/YfWOJWro1rnAlUfsBnDy2c4huUVZ0NDU3ocNsmXLuFd3gmzs +Pg6rBF2OUbOQ5bQXcuruKpRRe3Nra3cCr5UHIJhRdwALnip6pHsGSqaj/syrWKPIiujQI="}';
+          //  var decryptedString = bitgo.decrypt({ password: "", input: encryptedString });
+           // console.log(decryptedString);
             wallet.signTransaction(signParams)
            .then(function(signedTransaction) {
                 console.log("signed transaction:"+signedTransaction);

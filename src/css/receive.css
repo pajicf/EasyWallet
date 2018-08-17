@@ -1,0 +1,33 @@
+.receiveBody {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.message {
+  margin-top: 40px;
+  color: #eeeeee;
+  font-weight: bold;
+  font-size: 25px;
+}
+
+.id {
+  background-color: #eeeeee;
+  border-radius: 32px;
+  padding: 15px;
+  color: #393e46;
+  font-size: 24px;
+  overflow: scroll;
+  width: 100%;
+}
+
+::-webkit-scrollbar,
+*::-webkit-scrollbar {
+  display: none;
+}
+
+.explain {
+  text-align: right;
+  margin-left: auto;
+  width: 60%;
+}

@@ -1,0 +1,30 @@
+.warning {
+  color: red;
+  font-size: 32px;
+  width: 100%;
+}
+.newWalletID {
+  margin-top: 32px;
+  background-color: #222831;
+  color: white;
+  font-size: 32px;
+  overflow: scroll;
+  max-width: 1000px;
+  padding: 32px;
+  border-radius: 32px;
+}
+.box {
+  margin-top: 10%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.centerText {
+  width: 100%;
+  color: #393e46;
+  font-weight: bold;
+}
+::-webkit-scrollbar,
+*::-webkit-scrollbar {
+  display: none;
+}
