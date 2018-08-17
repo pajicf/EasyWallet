@@ -11,6 +11,7 @@ export default class send extends Component {
           placeholder="ID of reciever"
           type="text"
         />
+        <input className="inputSendAmount" placeholder="€" type="number" />
       </div>
     );
   }
