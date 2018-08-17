@@ -48,10 +48,10 @@ export default class home extends Component {
             <button> Receive </button>
             <button> Transactions </button>
           </div>
-          <div id="sendDisplay">
+          <div id="sendDisplay" style={{ display: "none" }}>
             <Send />
           </div>
-          <div id="receiveDisplay" style={{ display: "none" }}>
+          <div id="receiveDisplay">
             <Receive />
           </div>
           <div id="transactionsDisplay" />
