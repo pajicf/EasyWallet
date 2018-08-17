@@ -1,0 +1,37 @@
+.home-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 100px;
+}
+
+.home-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  background-color: #222831;
+  padding-left: 10px;
+  color: #eeeeee;
+}
+
+.homeTitle {
+  color: #eeeeee;
+  font-size: 40px;
+  font-weight: bold;
+  margin-left: 16px;
+  margin-top: 60px;
+}
+.btValue {
+  font-size: 18px;
+  height: 100%;
+  width: 150px;
+  padding-top: 16px;
+  margin-left: auto;
+  margin-right: 10px;
+  font-weight: bold;
+}
+.btBalance {
+  font-size: 18px;
+  height: 100%;
+  width: 150px;
+  padding-top: 16px;
+  font-weight: bold;
+}

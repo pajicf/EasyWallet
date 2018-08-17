@@ -12,11 +12,18 @@ export default class logIn extends Component {
           <p className="headerText"> Easy Wallet</p>
         </header>
         <div className="box">
-          <input className="wallID" placeholder="Enter your ID" type="text" />
+          <input
+            id="ID"
+            className="wallID"
+            placeholder="Enter your ID"
+            type="text"
+          />
           <div className="buttonsBox">
-            <button style={{ backgroundColor: "#00adb5" }} className="btnL">
-              Log in
-            </button>
+            <a href={`/home`}>
+              <button style={{ backgroundColor: "#00adb5" }} className="btnL">
+                Log in
+              </button>
+            </a>
             <a href="/new">
               <button className="btnL">New wallet</button>
             </a>
