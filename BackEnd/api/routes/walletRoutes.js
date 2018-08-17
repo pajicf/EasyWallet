@@ -3,6 +3,9 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 var router = express.Router();
 const walletPath="/wallet";
+//var controller=require('../controllers/walletController');
+var bitgo=require('../authentication');
+//console.log(bitgo);
 router.use(bodyParser.json());
 router.use(
   bodyParser.urlencoded({
@@ -23,20 +26,73 @@ router.use(function(req, res, next) {
 
 
 
-router.get(`${walletPath}/:id`,(req,res)=>{
-    //send 'get wallet by id' request to bitGo server
-    //put wallet info in res.json
+router.get(`${walletPath}/:id`,(req, res)=>{
+    const walletId =req.params.id;
+    console.log("WalletID:"+walletId);
+    bitgo.coin('tbtc').wallets().get({ id: walletId })
+    .then(function(wallet) {
+        console.log()
+        res.json(wallet._wallet);
+    console.log(wallet._wallet);
 });
-router.get(walletPath,(req,res)=>{
-    //send wallet generator request to bitGo server
-    //put wallet info in res.json
+});
+router.post(walletPath,(req,res)=>{
+    console.log("ubij me");
+    bitgo.coin('tltc').wallets()
+    .generateWallet({ label: 'My Test Wallet', passphrase: 'test1234' })
+    .then(function(wallet) {
+        res.json(wallet._wallet);
+  // print the new wallet
+     //console.log(wallet);
+}).catch(error => {
+    //res.status(500);
+    res.json({ messsage: "Error!" });
+  });
 });
 
 router.get(`${walletPath}/trans/:id`,(req,res)=>{
         //send 'list transactions' request to bitGo server
         //put the list in res.json
 });
-router.get(`${walletPath}/send`,(req,res)=>{
+router.post(`${walletPath}/send`,(req,res)=>{
+    bitgo.coin('tbtc').wallets().get({ id: req.body.walletId })
+    .then(function(wallet){
+        //build
+        let params = {
+            recipients: [
+              {
+                "amount": req.body.amount,
+                "address": req.body.address
+              }
+            ]
+          };
+          wallet.prebuildTransaction(params)
+          .then(function(builtTransaction) {
+            //sign
+            console.log("Built transaction:"+builtTransaction);
+            let signParams={
+                "txPrebuild": builtTransaction,
+                "prv": wallet._wallet.keys[0]
+            };
+            console.log(signParams.prv);
+            wallet.signTransaction(signParams)
+           .then(function(signedTransaction) {
+                console.log("signed transaction:"+signedTransaction);
+               let sendParams={
+                   "txHex": signedTransaction.body.txHex,
+                   "otp":'0000000'
+               };
+           //send
+           wallet.submitTransaction(signedParams)
+            .then(function(signed) {
+            // print transaction status
+            console.dir("Signed:"+signed);
+            });   
+        });
+    });
+});
+
+
     //front sends json with wallet id, amount of coins,which coin is it and the address of the receiver
     //we send 'build transaction','sign transaction' and 'send transaction' reqs to bitGo server and
     //confirm to front that the request is added in the blockchain and will be soon processed
