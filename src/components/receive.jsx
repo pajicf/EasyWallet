@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import "../css/receive.css";
-import Axios from "axios";
 
 export default class Receive extends Component {
   state = {

@@ -59,12 +59,22 @@ export default class home extends Component {
           <img src={logo} className="home-logo" alt="logo" />
           <p className="homeTitle"> Easy Wallet</p>
           <div className="btValue">
-            <img width="64px" height="64px" src={btcLogo} />
+            <img
+              width="64px"
+              height="64px"
+              src={btcLogo}
+              alt="1 Bitcoin in euros"
+            />
             <br />
             <p style={{ color: "#eeeeee" }}>{this.state.btInEur}€</p>
           </div>
           <div className="btBalance">
-            <img width="64px" height="64px" src={btcBalance} />
+            <img
+              width="64px"
+              height="64px"
+              src={btcBalance}
+              alt="Your wallet's Bitcoin balance"
+            />
             <br />
             <p style={{ color: "#eeeeee" }}>1.78 BTC</p>
           </div>
