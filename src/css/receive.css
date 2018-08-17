@@ -1,7 +1,9 @@
 .receiveBody {
   width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
-
 .message {
   margin-top: 40px;
   color: #eeeeee;
@@ -15,6 +17,13 @@
   padding: 15px;
   color: #393e46;
   font-size: 24px;
+  overflow: scroll;
+  width: 100%;
+}
+
+::-webkit-scrollbar,
+*::-webkit-scrollbar {
+  display: none;
 }
 
 .explain {

@@ -9,9 +9,9 @@ export default class Receive extends Component {
 
   render() {
     return (
-      <div>
+      <div className="receiverBody">
         <p className="message">This is your receive address!</p>
-        <p className="id">{this.state.walletID}</p>
+        <div className="id">{this.state.walletID}</div>
         <p className="explain">
           *When you want someone to send you funds you give them your receive
           address!
