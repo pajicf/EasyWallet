@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import logo from "../images/logo.png";
+import "../css/login.css";
 
 export default class logIn extends Component {
   state = {};
@@ -16,7 +17,9 @@ export default class logIn extends Component {
             <button style={{ backgroundColor: "#00adb5" }} className="btnL">
               Log in
             </button>
-            <button className="btnL">New wallet</button>
+            <a href="/new">
+              <button className="btnL">New wallet</button>
+            </a>
           </div>
         </div>
       </div>

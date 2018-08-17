@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { BrowserRouter, Route } from "react-router-dom";
-import "./css/login.css";
 
 import LogIn from "./components/login";
+import NewWallet from "./components/newWallet";
 
 class App extends Component {
   render() {
@@ -10,6 +10,7 @@ class App extends Component {
       <BrowserRouter>
         <div>
           <Route exact={true} path="/" render={() => <LogIn />} />
+          <Route exact={true} path="/new" render={() => <NewWallet />} />
         </div>
       </BrowserRouter>
     );
