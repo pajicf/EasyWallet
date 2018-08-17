@@ -4,6 +4,7 @@ import btcLogo from "../images/btc.png";
 import btcBalance from "../images/balance.png";
 import "../css/home.css";
 import Axios from "axios";
+import Send from "./send";
 
 export default class home extends Component {
   state = {
@@ -46,6 +47,7 @@ export default class home extends Component {
             <button> Receive </button>
             <button> Transactions </button>
           </div>
+          <Send />
         </div>
       </div>
     );

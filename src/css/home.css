@@ -37,6 +37,7 @@
 }
 .featuresContainer {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   max-width: 60%;
   margin: auto;
