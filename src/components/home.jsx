@@ -3,6 +3,7 @@ import logo from "../images/logo.png";
 import btcLogo from "../images/btc.png";
 import btcBalance from "../images/balance.png";
 import "../css/home.css";
+import Receive from "./receive";
 import Axios from "axios";
 import Send from "./send";
 
@@ -48,6 +49,7 @@ export default class home extends Component {
             <button> Transactions </button>
           </div>
           <Send />
+          <Receive />
         </div>
       </div>
     );
