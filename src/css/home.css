@@ -35,3 +35,25 @@
   padding-top: 16px;
   font-weight: bold;
 }
+.featuresContainer {
+  display: flex;
+  justify-content: center;
+  max-width: 60%;
+  margin: auto;
+  margin-top: 32px;
+  border-radius: 32px;
+  overflow: hidden;
+}
+.buttonBox {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.buttonBox button {
+  width: 33.3333%;
+  height: 64px;
+  background-color: #00adb5;
+  color: white;
+  font-size: 16px;
+  border: none;
+}

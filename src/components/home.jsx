@@ -39,6 +39,14 @@ export default class home extends Component {
             <p style={{ color: "#eeeeee" }}>1.78 BTC</p>
           </div>
         </header>
+
+        <div className="featuresContainer">
+          <div className="buttonBox">
+            <button style={{ backgroundColor: "#222831" }}> Send </button>
+            <button> Receive </button>
+            <button> Transactions </button>
+          </div>
+        </div>
       </div>
     );
   }
