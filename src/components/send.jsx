@@ -45,7 +45,9 @@ export default class send extends Component {
             onChange={() => this.handleChange()}
           />
           <p className="satoshis">Amount in bitcoins: {this.state.ammInBTC}</p>
-          <button className="btnL">Send</button>
+          <div style={{ width: "100%" }}>
+            <button className="btnSend">Send</button>
+          </div>
         </div>
       </div>
     );

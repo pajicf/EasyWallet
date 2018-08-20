@@ -3,9 +3,10 @@ import logo from "../images/logo.png";
 import btcLogo from "../images/btc.png";
 import btcBalance from "../images/balance.png";
 import "../css/home.css";
-import Receive from "./receive";
 import Axios from "axios";
+import Receive from "./receive";
 import Send from "./send";
+import Transactions from "./transactions";
 
 export default class home extends Component {
   state = {
@@ -14,6 +15,7 @@ export default class home extends Component {
 
   componentDidMount() {
     this.getBitInEuro();
+    this.hideEl();
   }
 
   getBitInEuro = () => {
@@ -95,16 +97,18 @@ export default class home extends Component {
               Receive
             </button>
             <button id="btn3" onClick={() => this.handleClick(3)}>
-              Transactions
+              Pending Transactions
             </button>
           </div>
-          <div id="sendDisplay" style={{ display: "none" }}>
+          <div id="sendDisplay">
             <Send />
           </div>
-          <div id="receiveDisplay" style={{ display: "none" }}>
+          <div id="receiveDisplay">
             <Receive />
           </div>
-          <div id="transactionsDisplay" style={{ display: "none" }} />
+          <div id="transactionsDisplay">
+            <Transactions />
+          </div>
         </div>
       </div>
     );

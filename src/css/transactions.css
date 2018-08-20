@@ -1,0 +1,38 @@
+.transactionsBody {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 80%;
+  margin: auto;
+  margin-top: 16px;
+  border-bottom: 2px solid black;
+}
+.receiverID {
+  background-color: #eeeeee;
+  color: black;
+  font-size: 32px;
+  overflow: scroll;
+  border-radius: 16px;
+  padding: 16px;
+  width: 100%;
+}
+.subText {
+  margin-top: 2px;
+  margin-right: auto;
+  font-style: italic;
+  color: #fd9200;
+}
+.amountSent {
+  background-color: #393e46;
+  font-size: 20px;
+  padding: 8px;
+}
+
+@media only screen and (max-width: 720px) {
+  .amountSent {
+    font-size: 14px;
+  }
+  .receiverID {
+    font-size: 24px;
+  }
+}

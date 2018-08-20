@@ -11,8 +11,8 @@
   border: none;
   font-size: 20px;
   border-radius: 24px;
-  padding-left: 8px;
-  padding-right: 8px;
+  padding-left: 16px;
+  padding-right: 16px;
   outline: none;
 }
 .inputSendAmount {
@@ -23,8 +23,8 @@
   font-size: 20px;
   border-radius: 24px;
   outline: none;
-  padding-left: 8px;
-  padding-right: 8px;
+  padding-left: 16px;
+  padding-right: 16px;
   margin-top: 8px;
 }
 .inputs {
@@ -35,9 +35,10 @@
 .satoshis {
   color: #fd9200;
   margin-left: 16px;
+  margin-top: 26px;
 }
-.btnL {
-  width: 256px;
+.btnSend {
+  width: 512px;
   height: 64px;
   margin-left: 16px;
   margin-top: 16px;
@@ -47,4 +48,12 @@
   border-radius: 32px;
   border: none;
   outline: none;
+}
+.btnSend:hover {
+  border-bottom: 4px solid black;
+}
+@media only screen and (max-width: 720px) {
+  .btnSend {
+    width: 80%;
+  }
 }
