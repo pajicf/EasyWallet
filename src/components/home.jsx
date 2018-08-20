@@ -29,6 +29,9 @@ export default class home extends Component {
     document.getElementById("sendDisplay").style.display = "none";
     document.getElementById("receiveDisplay").style.display = "none";
     document.getElementById("transactionsDisplay").style.display = "none";
+    document.getElementById("btn1").style.flexGrow = 1;
+    document.getElementById("btn2").style.flexGrow = 1;
+    document.getElementById("btn3").style.flexGrow = 1;
     document.getElementById("btn1").style.backgroundColor = "#00adb5";
     document.getElementById("btn2").style.backgroundColor = "#00adb5";
     document.getElementById("btn3").style.backgroundColor = "#00adb5";
@@ -36,6 +39,7 @@ export default class home extends Component {
 
   showEl = (tagName, btNum) => {
     document.getElementById(`${tagName}`).style.display = "inline";
+    document.getElementById(`btn${btNum}`).style.flexGrow = 2;
     document.getElementById(`btn${btNum}`).style.backgroundColor = "#222831";
   };
 
