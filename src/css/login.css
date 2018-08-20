@@ -42,6 +42,10 @@
   padding-right: 16px;
   color: black;
   outline: none;
+  transition: 0.5s;
+}
+.wallID:focus {
+  border-bottom: 4px solid #00adb5;
 }
 .buttonsBox {
   justify-content: center;

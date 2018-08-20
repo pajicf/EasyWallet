@@ -2,6 +2,7 @@
   color: red;
   font-size: 32px;
   width: 100%;
+  animation: fade 1s;
 }
 .newWalletID {
   margin-top: 32px;
@@ -14,6 +15,7 @@
   max-width: 1000px;
   padding: 32px;
   border-radius: 32px;
+  animation: fade 1s;
 }
 .box {
   margin-top: 10%;
@@ -29,4 +31,12 @@
 ::-webkit-scrollbar,
 *::-webkit-scrollbar {
   display: none;
+}
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
