@@ -25,30 +25,32 @@ export default class home extends Component {
     );
   };
 
+  hideEl = () => {
+    document.getElementById("sendDisplay").style.display = "none";
+    document.getElementById("receiveDisplay").style.display = "none";
+    document.getElementById("transactionsDisplay").style.display = "none";
+    document.getElementById("btn1").style.backgroundColor = "#00adb5";
+    document.getElementById("btn2").style.backgroundColor = "#00adb5";
+    document.getElementById("btn3").style.backgroundColor = "#00adb5";
+  };
+
+  showEl = (tagName, btNum) => {
+    document.getElementById(`${tagName}`).style.display = "inline";
+    document.getElementById(`btn${btNum}`).style.backgroundColor = "#222831";
+  };
+
   handleClick = bt => {
     if (bt === 1) {
-      document.getElementById("sendDisplay").style.display = "inline";
-      document.getElementById("btn1").style.backgroundColor = "#222831";
-      document.getElementById("receiveDisplay").style.display = "none";
-      document.getElementById("btn2").style.backgroundColor = "#00adb5";
-      document.getElementById("transactionsDisplay").style.display = "none";
-      document.getElementById("btn3").style.backgroundColor = "#00adb5";
+      this.hideEl();
+      this.showEl("sendDisplay", 1);
     }
     if (bt === 2) {
-      document.getElementById("sendDisplay").style.display = "none";
-      document.getElementById("btn1").style.backgroundColor = "#00adb5";
-      document.getElementById("receiveDisplay").style.display = "inline";
-      document.getElementById("btn2").style.backgroundColor = "#222831";
-      document.getElementById("transactionsDisplay").style.display = "none";
-      document.getElementById("btn3").style.backgroundColor = "#00adb5";
+      this.hideEl();
+      this.showEl("receiveDisplay", 2);
     }
     if (bt === 3) {
-      document.getElementById("sendDisplay").style.display = "none";
-      document.getElementById("btn1").style.backgroundColor = "#00adb5";
-      document.getElementById("receiveDisplay").style.display = "none";
-      document.getElementById("btn2").style.backgroundColor = "#00adb5";
-      document.getElementById("transactionsDisplay").style.display = "inline";
-      document.getElementById("btn3").style.backgroundColor = "#222831";
+      this.hideEl();
+      this.showEl("transactionsDisplay", 3);
     }
   };
 

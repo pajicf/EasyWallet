@@ -52,7 +52,7 @@
   justify-content: center;
 }
 .buttonBox button {
-  width: 33.3333%;
+  flex-grow: 1;
   height: 64px;
   background-color: #00adb5;
   color: white;
@@ -61,7 +61,7 @@
   outline: none;
 }
 .buttonBox button:hover {
-  background-color: #006166;
+  border: 2px solid #222831;
 }
 .active {
   background-color: #222831;
