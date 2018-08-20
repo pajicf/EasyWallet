@@ -1,4 +1,5 @@
 .receiveBody {
+  padding: 4px;
   width: 100%;
   display: flex;
   flex-wrap: wrap;
@@ -6,6 +7,8 @@
 }
 .message {
   margin-top: 40px;
+  margin-left: 4px;
+  margin-right: 4px;
   color: #eeeeee;
   font-weight: bold;
   font-size: 25px;

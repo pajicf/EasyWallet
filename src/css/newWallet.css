@@ -5,6 +5,8 @@
 }
 .newWalletID {
   margin-top: 32px;
+  margin-left: 4px;
+  margin-right: 4px;
   background-color: #222831;
   color: white;
   font-size: 32px;

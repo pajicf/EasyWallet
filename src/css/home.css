@@ -40,7 +40,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  max-width: 60%;
+  max-width: 70%;
   margin: auto;
   margin-top: 32px;
   border-radius: 32px;
@@ -92,5 +92,13 @@
   }
   to {
     height: 145px;
+  }
+}
+
+@media only screen and (max-width: 720px) {
+  .featuresContainer {
+    max-width: 100%;
+    margin-top: 32px;
+    border-radius: 0px;
   }
 }
