@@ -35,10 +35,10 @@ router.get(`${walletPath}/:id`, (req, res) => {
       res.json(wallet._wallet);
       console.log(wallet._wallet);
     })
-    .catch(error)
-    {
-        res.json("Error:",error);
-    };
+    .catch(error => {
+      res.json("Error:",error);
+    });
+
 });
 router.post(walletPath, (req, res) => {
   console.log("ubij me");
