@@ -11,13 +11,15 @@ import Transactions from "./transactions";
 export default class home extends Component {
   state = {
     btInEur: 0,
-    walletID: ""
+    walletID: "",
+    balance: "/"
   };
 
   componentDidMount() {
     this.getBitInEuro();
     setInterval(this.getBitInEuro, 300000);
     this.hideEl();
+    this.getBitBalance();
   }
 
   componentWillMount() {
@@ -29,6 +31,15 @@ export default class home extends Component {
       res => {
         let a = 1 / res.data;
         this.setState({ btInEur: a.toFixed(2) });
+      }
+    );
+  };
+
+  getBitBalance = () => {
+    Axios.get(`http://localhost:8080/wallet/${this.state.walletID}`).then(
+      res => {
+        console.dir(res);
+        this.setState({ balance: res.data.balance });
       }
     );
   };
@@ -93,7 +104,7 @@ export default class home extends Component {
             <p style={{ color: "#eeeeee" }}>
               Balance:
               <br />
-              1.7814 BTC
+              {this.state.balance / 1e8}
             </p>
           </div>
         </header>

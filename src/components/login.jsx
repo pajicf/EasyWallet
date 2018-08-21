@@ -11,13 +11,9 @@ export default class logIn extends Component {
     id: ""
   };
 
-  getUserWallet() {
-    let id = document.getElementById("ID").value;
-    Axios.get(`http://localhost:8080/wallet/${id}`).then(res => {
-      let thisWallet = res.data;
-      this.setState({ id: thisWallet.id });
-    });
-  }
+  handleChange = data => {
+    this.setState({ id: data });
+  };
 
   render() {
     return (
@@ -33,7 +29,7 @@ export default class logIn extends Component {
             className="wallID"
             placeholder="Enter your ID"
             type="text"
-            onChange={event => this.setState({ id: event.target.value })}
+            onChange={event => this.handleChange(event.target.value)}
           />
           <div className="buttonsBox">
             <Link to={`/home/${this.state.id}`}>
