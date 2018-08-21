@@ -10,14 +10,14 @@ import Transactions from "./transactions";
 
 export default class home extends Component {
   state = {
-    btInEur: 0,
+    btInUSD: 0,
     walletID: "",
     balance: "/"
   };
 
   componentDidMount() {
-    this.getBitInEuro();
-    setInterval(this.getBitInEuro, 300000);
+    this.getBitInUSD();
+    setInterval(this.getBitInUSD, 300000);
     this.hideEl();
     this.getBitBalance();
   }
@@ -26,11 +26,11 @@ export default class home extends Component {
     this.setState({ walletID: this.props.match.params.id });
   }
 
-  getBitInEuro = () => {
+  getBitInUSD = () => {
     Axios.get("https://blockchain.info/tobtc?currency=USD&value=1").then(
       res => {
         let a = 1 / res.data;
-        this.setState({ btInEur: a.toFixed(2) });
+        this.setState({ btInUSD: a.toFixed(2) });
       }
     );
   };
@@ -91,7 +91,7 @@ export default class home extends Component {
               alt="1 Bitcoin in euros"
             />
             <br />
-            <p style={{ color: "#eeeeee" }}>$ {this.state.btInEur}</p>
+            <p style={{ color: "#eeeeee" }}>$ {this.state.btInUSD}</p>
           </div>
           <div className="btBalance">
             <img
@@ -104,7 +104,7 @@ export default class home extends Component {
             <p style={{ color: "#eeeeee" }}>
               Balance:
               <br />
-              {this.state.balance / 1e8}
+              {this.state.balance / 1e8} TBTC
             </p>
           </div>
         </header>
@@ -122,7 +122,7 @@ export default class home extends Component {
             </button>
           </div>
           <div id="sendDisplay">
-            <Send />
+            <Send wallID={this.state.walletID} />
           </div>
           <div id="receiveDisplay">
             <Receive wallID={this.state.walletID} />

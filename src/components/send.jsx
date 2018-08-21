@@ -4,26 +4,50 @@ import Axios from "axios";
 
 export default class send extends Component {
   state = {
+    walletID: "",
     ammInBTC: 0,
-    btInEur: 0
+    btInUSD: 0
   };
+
+  sendCash = () => {
+    let amUSD = document.getElementById("inputAmountID").value;
+    let amBTC = amUSD / this.state.btInUSD;
+    let amSatoshi = amBTC * 1e8;
+    console.log(Math.round(amSatoshi));
+    let rec = document.getElementById("receiver").value;
+    Axios.post("http://localhost:8080/wallet/send", {
+      amount: Math.round(amSatoshi),
+      address: rec,
+      walletId: this.state.walletID
+    })
+      .then(res => {
+        window.location.reload(true);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  componentWillMount() {
+    this.setState({ walletID: this.props.wallID });
+  }
 
   handleChange = () => {
     let conv =
-      document.getElementById("inputAmountID").value / this.state.btInEur;
+      document.getElementById("inputAmountID").value / this.state.btInUSD;
 
     this.setState({ ammInBTC: conv.toFixed(8) });
   };
 
   componentDidMount() {
-    this.getBitInEuro();
+    this.getBitInUSD();
   }
 
-  getBitInEuro = () => {
+  getBitInUSD = () => {
     Axios.get("https://blockchain.info/tobtc?currency=USD&value=1").then(
       res => {
         let a = Math.round(1 / res.data);
-        this.setState({ btInEur: a });
+        this.setState({ btInUSD: a });
       }
     );
   };
@@ -33,6 +57,7 @@ export default class send extends Component {
       <div className="sendBody">
         <div className="inputs">
           <input
+            id="receiver"
             className="inputSendID"
             placeholder="ID of reciever"
             type="text"
@@ -44,9 +69,11 @@ export default class send extends Component {
             type="number"
             onChange={() => this.handleChange()}
           />
-          <p className="satoshis">Amount in bitcoins: {this.state.ammInBTC}</p>
+          <p className="satoshis">Amount in BTC: {this.state.ammInBTC}</p>
           <div style={{ width: "100%" }}>
-            <button className="btnSend">Send</button>
+            <button onClick={() => this.sendCash()} className="btnSend">
+              Send
+            </button>
           </div>
         </div>
       </div>
