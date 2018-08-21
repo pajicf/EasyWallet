@@ -5,7 +5,9 @@ import "../css/newWallet.css";
 
 export default class newWallet extends Component {
   state = {
-    wallet: {}
+    wallet: {
+      id: ""
+    }
   };
 
   componentDidMount() {
@@ -15,7 +17,8 @@ export default class newWallet extends Component {
   generateNewWallet = () => {
     Axios.post("http://localhost:8080/wallet", "REQUEST")
       .then(res => {
-        let newWallet = res.data;
+        let newWallet = res.data.wallet._wallet;
+        console.log(this.state.wallet);
         this.setState({ wallet: newWallet });
       })
       .catch(error => {
