@@ -38,12 +38,12 @@ router.get(`${walletPath}/:id`,(req, res)=>{
 });
 router.post(walletPath,(req,res)=>{
     console.log("ubij me");
-    bitgo.coin('tltc').wallets()
+    bitgo.coin('tbtc').wallets()
     .generateWallet({ label: 'My Test Wallet', passphrase: 'test1234' })
     .then(function(wallet) {
         res.json(wallet._wallet);
   // print the new wallet
-     //console.log(wallet);
+     console.log(wallet);
 }).catch(error => {
     //res.status(500);
     res.json({ messsage: "Error!" });
@@ -59,22 +59,25 @@ router.post(`${walletPath}/send`,(req,res)=>{
     .then(function(wallet){
         //build
         let params = {
-            recipients: [
+            recipients:[
               {
                 "amount": req.body.amount,
                 "address": req.body.address
-              }
-            ]
+              }]
           };
+          console.log(params);
           wallet.prebuildTransaction(params)
-          .then(function(builtTransaction) {
+          .then(function(transaction) {
             //sign
-            console.log("Built transaction:"+builtTransaction);
+            console.dir("Built transaction:"+transaction);
             let signParams={
-                "txPrebuild": builtTransaction,
+                "txPrebuild": transaction,
                 "prv": wallet._wallet.keys[0]
             };
-            console.log(signParams.prv);
+            console.log(wallet._wallet.keys)
+            console.log(signParams);
+            delete signParams.txPrebuild.txInfo.walletAddressDetails;
+            delete signParams.txPrebuild.walletId;
           //  var encryptedString = '{"iv":"VncyeOxU/zwkma2AW97buQ==","v":1,"iter":10000,"ks":256,"ts":64,"mode" :"ccm","adata":"","cipher":"aes","salt":"yr1dZrvacDM=","ct":"3vJ8N8mVALEasC Htw1eWgoLy2Oh3yvNEiEdToJ/R/YfWOJWro1rnAlUfsBnDy2c4huUVZ0NDU3ocNsmXLuFd3gmzs +Pg6rBF2OUbOQ5bQXcuruKpRRe3Nra3cCr5UHIJhRdwALnip6pHsGSqaj/syrWKPIiujQI="}';
           //  var decryptedString = bitgo.decrypt({ password: "", input: encryptedString });
            // console.log(decryptedString);
@@ -107,5 +110,14 @@ router.get(`${walletPath}/transfer`,(req,res)=>{
 router.get(`${walletPath}/approve/:id`,(req,res)=>{
     //set up a system where whenever our send transaction is approved we get info back
     //and notify the front with the nessecary information. :)
+});
+router.post(`${walletPath}/addr/:id`,(req,res)=>{
+    wallet.getAddress({id: `${req.params.id}`})
+    .then(function(address) {
+    // print address
+    res.json(address.address)
+    console.dir(address);
+});
+    //gets the public key, that is sent to the frontend
 });
 module.exports = router;
