@@ -41,7 +41,7 @@ router.post(walletPath, (req, res) => {
   bitgo
     .coin("tbtc")
     .wallets()
-    .generateWallet({ label: "My Test Wallet", passphrase: "test1234" })
+    .generateWallet({ label: "My Test Wallet", passphrase: "xd" })
     .then(function(wallet) {
       res.json(wallet._wallet);
       // print the new wallet
