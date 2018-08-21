@@ -122,4 +122,8 @@ router.post(`${walletPath}/addr/:id`, (req, res) => {
   });
   //gets the public key, that is sent to the frontend
 });
+
+router.post("/test",(req,res)=>{
+  setTimeout(res.json({id: "RESPONSE!!!"}),5000);
+});
 module.exports = router;
