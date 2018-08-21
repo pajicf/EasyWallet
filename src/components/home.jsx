@@ -10,13 +10,18 @@ import Transactions from "./transactions";
 
 export default class home extends Component {
   state = {
-    btInEur: 0
+    btInEur: 0,
+    walletID: ""
   };
 
   componentDidMount() {
     this.getBitInEuro();
     setInterval(this.getBitInEuro, 300000);
     this.hideEl();
+  }
+
+  componentWillMount() {
+    this.setState({ walletID: this.props.match.params.id });
   }
 
   getBitInEuro = () => {
@@ -109,7 +114,7 @@ export default class home extends Component {
             <Send />
           </div>
           <div id="receiveDisplay">
-            <Receive />
+            <Receive wallID={this.state.walletID} />
           </div>
           <div id="transactionsDisplay">
             <Transactions />

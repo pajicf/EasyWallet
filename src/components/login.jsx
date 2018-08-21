@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import Axios from "axios";
 import logo from "../images/logo.png";
 import "../css/login.css";
@@ -32,9 +33,10 @@ export default class logIn extends Component {
             className="wallID"
             placeholder="Enter your ID"
             type="text"
+            onChange={event => this.setState({ id: event.target.value })}
           />
           <div className="buttonsBox">
-            <a href={`/home/${this.state.id}`}>
+            <Link to={`/home/${this.state.id}`}>
               <button
                 onClick={this.getUserWallet}
                 style={{ backgroundColor: "#00adb5" }}
@@ -42,7 +44,7 @@ export default class logIn extends Component {
               >
                 Log in
               </button>
-            </a>
+            </Link>
             <a href="/new">
               <button className="btnL">New wallet</button>
             </a>
