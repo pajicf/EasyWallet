@@ -1,9 +1,18 @@
 import React, { Component } from "react";
+// import Axios from "axios";
 import logo from "../images/logo.png";
 import "../css/login.css";
 
 export default class logIn extends Component {
-  state = {};
+  state = {
+    wallet: {}
+  };
+
+  // getUserWallet() {
+  //   let id = document.getElementById("ID").innerHTML;
+  //   // Axios.get("http://")
+  // }
+
   render() {
     return (
       <div className="App">

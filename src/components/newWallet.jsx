@@ -14,20 +14,20 @@ export default class newWallet extends Component {
     this.generateNewWallet();
   }
 
-  generateNewWallet = () => {
-    Axios.post("http://localhost:8080/wallet", "REQUEST")
-      .then(res => {
-        let newWallet = res.data.wallet._wallet;
-        console.log(this.state.wallet);
-        this.setState({ wallet: newWallet });
-      })
-      .catch(error => {
-        this.setState({
-          wallet: { id: "Error has occured! Try later." }
+  generateNewWallet() {
+    return new Promise((resolve, reject) => {
+      Axios.post("http://localhost:8080/wallet", "REQUEST")
+        .then(res => {
+          this.setState({ wallet: res.data });
+        })
+        .catch(error => {
+          this.setState({
+            wallet: { id: "Error has occured! Try later." }
+          });
+          document.getElementById("warning").style.display = "none";
         });
-        document.getElementById("warning").style.display = "none";
-      });
-  };
+    });
+  }
 
   render() {
     return (
