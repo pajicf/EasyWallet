@@ -12,7 +12,7 @@ export default class newWallet extends Component {
   };
 
   componentDidMount() {
-    //this.generateNewWallet();
+    this.generateNewWallet();
   }
 
   generateNewWallet() {
