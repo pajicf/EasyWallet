@@ -12,7 +12,7 @@ class App extends Component {
         <div>
           <Route exact={true} path="/" render={() => <LogIn />} />
           <Route exact={true} path="/new" render={() => <NewWallet />} />
-          <Route exact={true} path="/home" render={() => <Home />} />
+          <Route exact={true} path="/home/:id" render={() => <Home />} />
         </div>
       </BrowserRouter>
     );

@@ -1,17 +1,22 @@
 import React, { Component } from "react";
-// import Axios from "axios";
+import Axios from "axios";
 import logo from "../images/logo.png";
 import "../css/login.css";
+import { runInThisContext } from "vm";
 
 export default class logIn extends Component {
   state = {
-    wallet: {}
+    wallet: {},
+    id: ""
   };
 
-  // getUserWallet() {
-  //   let id = document.getElementById("ID").innerHTML;
-  //   // Axios.get("http://")
-  // }
+  getUserWallet() {
+    let id = document.getElementById("ID").value;
+    Axios.get(`http://localhost:8080/wallet/${id}`).then(res => {
+      let thisWallet = res.data;
+      this.setState({ id: thisWallet.id });
+    });
+  }
 
   render() {
     return (
@@ -29,8 +34,12 @@ export default class logIn extends Component {
             type="text"
           />
           <div className="buttonsBox">
-            <a href={`/home`}>
-              <button style={{ backgroundColor: "#00adb5" }} className="btnL">
+            <a href={`/home/${this.state.id}`}>
+              <button
+                onClick={this.getUserWallet}
+                style={{ backgroundColor: "#00adb5" }}
+                className="btnL"
+              >
                 Log in
               </button>
             </a>

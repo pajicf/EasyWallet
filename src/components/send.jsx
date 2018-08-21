@@ -20,7 +20,7 @@ export default class send extends Component {
   }
 
   getBitInEuro = () => {
-    Axios.get("https://blockchain.info/tobtc?currency=EUR&value=1").then(
+    Axios.get("https://blockchain.info/tobtc?currency=USD&value=1").then(
       res => {
         let a = Math.round(1 / res.data);
         this.setState({ btInEur: a });
@@ -40,7 +40,7 @@ export default class send extends Component {
           <input
             id="inputAmountID"
             className="inputSendAmount"
-            placeholder="€"
+            placeholder="$"
             type="number"
             onChange={() => this.handleChange()}
           />

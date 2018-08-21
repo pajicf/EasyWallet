@@ -15,12 +15,12 @@ export default class home extends Component {
 
   componentDidMount() {
     this.getBitInEuro();
-    setInterval(this.getBitInEuro, 600000);
+    setInterval(this.getBitInEuro, 300000);
     this.hideEl();
   }
 
   getBitInEuro = () => {
-    Axios.get("https://blockchain.info/tobtc?currency=EUR&value=1").then(
+    Axios.get("https://blockchain.info/tobtc?currency=USD&value=1").then(
       res => {
         let a = 1 / res.data;
         this.setState({ btInEur: a.toFixed(2) });
@@ -75,7 +75,7 @@ export default class home extends Component {
               alt="1 Bitcoin in euros"
             />
             <br />
-            <p style={{ color: "#eeeeee" }}>{this.state.btInEur}€</p>
+            <p style={{ color: "#eeeeee" }}>$ {this.state.btInEur}</p>
           </div>
           <div className="btBalance">
             <img
@@ -85,7 +85,11 @@ export default class home extends Component {
               alt="Your wallet's Bitcoin balance"
             />
             <br />
-            <p style={{ color: "#eeeeee" }}>1.7814 BTC</p>
+            <p style={{ color: "#eeeeee" }}>
+              Balance:
+              <br />
+              1.7814 BTC
+            </p>
           </div>
         </header>
 
