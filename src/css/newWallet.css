@@ -18,7 +18,7 @@
   animation: fade 1s;
 }
 .box {
-  margin-top: 10%;
+  margin-top: 0px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
