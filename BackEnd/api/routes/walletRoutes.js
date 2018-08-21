@@ -36,18 +36,20 @@ router.get(`${walletPath}/:id`, (req, res) => {
       console.log(wallet._wallet);
     })
     .catch(error => {
-      res.json("Error:",error);
+      res.json("Error:", error);
     });
-
 });
 router.post(walletPath, (req, res) => {
   console.log("ubij me");
   bitgo
     .coin("tbtc")
     .wallets()
-    .generateWallet({ label: "My Test Wallet", passphrase: process.env.PassPhrase })
+    .generateWallet({
+      label: "My Test Wallet",
+      passphrase: process.env.PassPhrase
+    })
     .then(function(wallet) {
-     // wallet=wallet._wallet;
+      // wallet=wallet._wallet;
       res.json(wallet.wallet._wallet);
       //print the new wallet
       console.log(wallet);
@@ -75,16 +77,16 @@ router.post(walletPath, (req, res) => {
 });
 
 router.get(`${walletPath}/trans/:id`, (req, res) => {
-      var id=req.params.id;
-      bitgo
-      .coin("tbtc")
-      .wallets()
-      .get({ id: walletId })
-      .then(function(wallet) {
-        var transactions= wallet.transactions();
-        console.log(transactions);
-        res.json(transactions);
-      });
+  var id = req.params.id;
+  bitgo
+    .coin("tbtc")
+    .wallets()
+    .get({ id: walletId })
+    .then(function(wallet) {
+      var transactions = wallet.transactions();
+      console.log(transactions);
+      res.json(transactions);
+    });
   //send 'list transactions' request to bitGo server
   //put the list in res.json
 });
@@ -107,9 +109,7 @@ router.post(`${walletPath}/send`, (req, res) => {
     });
 });
 
-router.get(`${walletPath}/transfer`, (req, res) => {
-
-});
+router.get(`${walletPath}/transfer`, (req, res) => {});
 router.get(`${walletPath}/approve`, (req, res) => {
   //set up a system where whenever our send transaction is approved we get info back
   //and notify the front with the nessecary information. :)
