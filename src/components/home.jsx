@@ -85,7 +85,11 @@ export default class home extends Component {
               alt="Your wallet's Bitcoin balance"
             />
             <br />
-            <p style={{ color: "#eeeeee" }}>1.7814 BTC</p>
+            <p style={{ color: "#eeeeee" }}>
+              Ballance:
+              <br />
+              1.7814 BTC
+            </p>
           </div>
         </header>
 
