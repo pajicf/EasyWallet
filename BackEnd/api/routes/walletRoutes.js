@@ -41,12 +41,29 @@ router.post(walletPath, (req, res) => {
   bitgo
     .coin("tbtc")
     .wallets()
-    .generateWallet({ label: "My Test Wallet", passphrase: "xd" })
+    .generateWallet({ label: "My Test Wallet", passphrase: process.env.PassPhrase })
     .then(function(wallet) {
-      res.json(wallet._wallet);
-      // print the new wallet
+     // wallet=wallet._wallet;
+      res.json(wallet.wallet._wallet);
+      //print the new wallet
       console.log(wallet);
     })
+    /*.then(function(wallet) {
+      return wallet.addWebhook({
+        url: 'http://localhost:8080/wallet/transfer',
+        type: "transfer"
+      });
+    })
+    .then(function(wallet) {
+      return wallet.addWebhook({
+        url: 'http://localhost:8080/wallet/approve',
+        type: "pendingapproval"
+      });
+    })
+    .then(function(webhook) {
+      // print the new webhook
+      console.dir(webhook);
+    })*/
     .catch(error => {
       //res.status(500);
       res.json({ messsage: "Error!" });
@@ -54,6 +71,16 @@ router.post(walletPath, (req, res) => {
 });
 
 router.get(`${walletPath}/trans/:id`, (req, res) => {
+      var id=req.params.id;
+      bitgo
+      .coin("tbtc")
+      .wallets()
+      .get({ id: walletId })
+      .then(function(wallet) {
+        var transactions= wallet.transactions();
+        console.log(transactions);
+        res.json(transactions);
+      });
   //send 'list transactions' request to bitGo server
   //put the list in res.json
 });
@@ -68,7 +95,7 @@ router.post(`${walletPath}/send`, (req, res) => {
       let params = {
         amount: req.body.amount,
         address: req.body.address,
-        walletPassphrase: "xd"
+        walletPassphrase: process.env.PassPhrase
       };
       wallet.send(params).then(transaction => {
         console.dir(transaction);
@@ -77,10 +104,9 @@ router.post(`${walletPath}/send`, (req, res) => {
 });
 
 router.get(`${walletPath}/transfer`, (req, res) => {
-  //set up webhook so that we get notified whenever someone has sent us cash
-  //sent to front transaction id,address,amount and status of the transaction
+
 });
-router.get(`${walletPath}/approve/:id`, (req, res) => {
+router.get(`${walletPath}/approve`, (req, res) => {
   //set up a system where whenever our send transaction is approved we get info back
   //and notify the front with the nessecary information. :)
 });
