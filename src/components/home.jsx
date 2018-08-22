@@ -129,7 +129,7 @@ export default class home extends Component {
               Receive
             </button>
             <button id="btn3" onClick={() => this.handleClick(3)}>
-              Pending Transactions
+              Transactions
             </button>
           </div>
           <div id="sendDisplay">

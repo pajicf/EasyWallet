@@ -14,34 +14,37 @@ export default class send extends Component {
     let amBTC = amUSD / this.state.btInUSD;
     let amSatoshi = amBTC * 1e8;
     let rec = document.getElementById("receiver").value;
-    Axios.post("http://localhost:8080/wallet/send", {
-      amount: Math.round(amSatoshi),
-      address: rec,
-      walletId: this.state.walletID
-    })
-      .then(res => {
-        window.location.reload(true);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-
     document.getElementById("inputAmountID").disabled = true;
     document.getElementById("receiver").disabled = true;
     document.getElementById("sendButton").disabled = true;
     document.getElementById("sendButton").innerHTML = "Sending";
     document.getElementById("sendButton").style.backgroundColor = "#fd9200";
-    setTimeout(() => {
-      document.getElementById("sendButton").style.backgroundColor = "#393e46";
-      document.getElementById("sendButton").disabled = false;
-      document.getElementById("inputAmountID").disabled = false;
-      document.getElementById("receiver").disabled = false;
-      document.getElementById("sendButton").innerHTML = "Send";
-      document.getElementById("receiver").value = null;
-      document.getElementById("inputAmountID").value = null;
-      this.setState({ ammInBTC: 0 });
-    }, 3000);
+    Axios.post("http://localhost:8080/wallet/send/fake/fake", {
+      amount: Math.round(amSatoshi),
+      address: rec,
+      walletId: this.state.walletID
+    })
+      .then(res => {
+        console.log(res);
+        handleChange();
+        window.location.reload(true);
+      })
+      .catch(error => {
+        handleChange();
+        console.log(error);
+      });
   };
+
+  handleChange() {
+    document.getElementById("sendButton").style.backgroundColor = "#393e46";
+    document.getElementById("sendButton").disabled = false;
+    document.getElementById("inputAmountID").disabled = false;
+    document.getElementById("receiver").disabled = false;
+    document.getElementById("sendButton").innerHTML = "Send";
+    document.getElementById("receiver").value = null;
+    document.getElementById("inputAmountID").value = null;
+    this.setState({ ammInBTC: 0 });
+  }
 
   componentWillMount() {
     this.setState({ walletID: this.props.wallID });
