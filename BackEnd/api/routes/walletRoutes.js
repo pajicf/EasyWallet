@@ -77,15 +77,16 @@ router.post(walletPath, (req, res) => {
 });
 
 router.get(`${walletPath}/trans/:id`, (req, res) => {
-  var id = req.params.id;
+  var walletId = req.params.id;
   bitgo
     .coin("tbtc")
     .wallets()
     .get({ id: walletId })
     .then(function(wallet) {
-      var transactions = wallet.transactions();
-      console.log(transactions);
-      res.json(transactions);
+      wallet.transactions().then(transactions => {
+        console.dir(transactions);
+        res.json(transactions);
+      });
     });
   //send 'list transactions' request to bitGo server
   //put the list in res.json
