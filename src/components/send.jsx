@@ -19,23 +19,26 @@ export default class send extends Component {
     document.getElementById("sendButton").disabled = true;
     document.getElementById("sendButton").innerHTML = "Sending";
     document.getElementById("sendButton").style.backgroundColor = "#fd9200";
-    Axios.post("http://localhost:8080/wallet/send/fake/fake", {
+    Axios.post("http://localhost:8080/wallet/send/test/test", {
       amount: Math.round(amSatoshi),
       address: rec,
       walletId: this.state.walletID
     })
       .then(res => {
         console.log(res);
-        handleChange();
-        window.location.reload(true);
+        this.handleSendChange();
+        alert("Your transaction has been submitted and is now pending!");
       })
       .catch(error => {
-        handleChange();
+        this.handleSendChange();
         console.log(error);
+        alert(
+          "Error while submitting transaction! Please check your internet connection, your funds and try again later!"
+        );
       });
   };
 
-  handleChange() {
+  handleSendChange() {
     document.getElementById("sendButton").style.backgroundColor = "#393e46";
     document.getElementById("sendButton").disabled = false;
     document.getElementById("inputAmountID").disabled = false;
