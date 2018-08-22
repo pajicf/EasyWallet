@@ -39,7 +39,13 @@ export default class logIn extends Component {
               style={{ backgroundColor: "#00adb5" }}
               className="btnL"
             >
-              <Link to={`/home`}>Log in</Link>
+              <Link
+                style={{ textDecoration: "none" }}
+                className="linkToHome"
+                to={`/home`}
+              >
+                Log in
+              </Link>
             </button>
 
             <a href="/new">
