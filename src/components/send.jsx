@@ -13,7 +13,6 @@ export default class send extends Component {
     let amUSD = document.getElementById("inputAmountID").value;
     let amBTC = amUSD / this.state.btInUSD;
     let amSatoshi = amBTC * 1e8;
-    console.log(Math.round(amSatoshi));
     let rec = document.getElementById("receiver").value;
     Axios.post("http://localhost:8080/wallet/send", {
       amount: Math.round(amSatoshi),
@@ -41,7 +40,7 @@ export default class send extends Component {
       document.getElementById("receiver").value = null;
       document.getElementById("inputAmountID").value = null;
       this.setState({ ammInBTC: 0 });
-    }, 2000);
+    }, 3000);
   };
 
   componentWillMount() {

@@ -12,7 +12,8 @@ export default class home extends Component {
   state = {
     btInUSD: 0,
     walletID: "",
-    balance: "/"
+    balance: "/",
+    transactions: []
   };
 
   componentDidMount() {
@@ -20,10 +21,21 @@ export default class home extends Component {
     setInterval(this.getBitInUSD, 300000);
     this.hideEl();
     this.getBitBalance();
+    setInterval(this.getBitBalance, 30000);
+    this.getAllTransactions();
   }
 
   componentWillMount() {
     this.setState({ walletID: this.props.match.params.id });
+  }
+
+  getAllTransactions() {
+    Axios.get(`http://localhost:8080/wallet/trans/${this.state.walletID}`).then(
+      res => {
+        console.log(res.data.transactions);
+        this.setState({ transactions: res.data.transactions });
+      }
+    );
   }
 
   getBitInUSD = () => {
@@ -128,7 +140,10 @@ export default class home extends Component {
             <Receive wallID={this.state.walletID} />
           </div>
           <div id="transactionsDisplay">
-            <Transactions />
+            <Transactions
+              trans={this.state.transactions}
+              wallID={this.state.walletID}
+            />
           </div>
         </div>
       </div>
