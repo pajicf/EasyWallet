@@ -82,6 +82,7 @@ export default class send extends Component {
             className="inputSendAmount"
             placeholder="$"
             type="number"
+            min="0"
             onChange={() => this.handleChange()}
           />
           <p className="satoshis">Amount in BTC: {this.state.ammInBTC}</p>
