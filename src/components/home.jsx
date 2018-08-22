@@ -122,7 +122,7 @@ export default class home extends Component {
             </button>
           </div>
           <div id="sendDisplay">
-            <Send wallID={this.state.walletID} />
+            <Send wallID={this.state.walletID} balance={this.state.balance} />
           </div>
           <div id="receiveDisplay">
             <Receive wallID={this.state.walletID} />
