@@ -32,6 +32,7 @@ export default class logIn extends Component {
             onChange={event => this.handleChange(event.target.value)}
           />
           <div className="buttonsBox">
+<<<<<<< HEAD
             <Link to={`/home/${this.state.id}`}>
               <button
                 onClick={this.getUserWallet}
@@ -41,6 +42,22 @@ export default class logIn extends Component {
                 Log in
               </button>
             </Link>
+=======
+            <button
+              onClick={this.getUserWallet}
+              style={{ backgroundColor: "#00adb5" }}
+              className="btnL"
+            >
+              <Link
+                style={{ textDecoration: "none" }}
+                className="linkToHome"
+                to={`/home`}
+              >
+                Log in
+              </Link>
+            </button>
+
+>>>>>>> bd8be155904f51340271214962314cbd2085fcda
             <a href="/new">
               <button className="btnL">New wallet</button>
             </a>
