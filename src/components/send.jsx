@@ -26,6 +26,21 @@ export default class send extends Component {
       .catch(error => {
         console.log(error);
       });
+
+    document.getElementById("inputAmountID").disabled = true;
+    document.getElementById("receiver").disabled = true;
+    document.getElementById("sendButton").disabled = true;
+    document.getElementById("sendButton").innerHTML = "Sending";
+    document.getElementById("sendButton").style.backgroundColor = "#fd9200";
+    setTimeout(() => {
+      document.getElementById("sendButton").style.backgroundColor = "#393e46";
+      document.getElementById("sendButton").disabled = false;
+      document.getElementById("inputAmountID").disabled = false;
+      document.getElementById("receiver").disabled = false;
+      document.getElementById("sendButton").innerHTML = "Send";
+      document.getElementById("receiver").value = null;
+      document.getElementById("inputAmountID").value = null;
+    }, 2000);
   };
 
   componentWillMount() {
@@ -71,7 +86,11 @@ export default class send extends Component {
           />
           <p className="satoshis">Amount in BTC: {this.state.ammInBTC}</p>
           <div style={{ width: "100%" }}>
-            <button onClick={() => this.sendCash()} className="btnSend">
+            <button
+              id="sendButton"
+              onClick={() => this.sendCash()}
+              className="btnSend"
+            >
               Send
             </button>
           </div>

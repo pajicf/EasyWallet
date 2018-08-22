@@ -48,6 +48,7 @@
   border-radius: 32px;
   border: none;
   outline: none;
+  transition: 1s;
 }
 .btnSend:hover {
   border-bottom: 4px solid black;
