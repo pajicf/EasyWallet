@@ -26,7 +26,7 @@ export default class home extends Component {
   }
 
   componentWillMount() {
-    this.setState({ walletID: this.props.match.params.id });
+    this.setState({ walletID: this.props.wallId });
   }
 
   getAllTransactions() {

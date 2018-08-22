@@ -47,7 +47,13 @@ export default class newWallet extends Component {
           </p>
           <div className="newWalletID">
             {this.state.wallet.id}
-            <img id="loader" src={loader} width="40px" height="40px" />
+            <img
+              alt="loader"
+              id="loader"
+              src={loader}
+              width="40px"
+              height="40px"
+            />
           </div>
           <p className="centerText">Double click on ID then copy it</p>
           <a href="/">
