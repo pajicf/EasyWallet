@@ -5,7 +5,7 @@
   max-width: 80%;
   margin: auto;
   margin-top: 16px;
-  border-bottom: 2px solid black;
+  border-bottom: 2px solid white;
 }
 .receiverID {
   background-color: #eeeeee;
@@ -26,6 +26,17 @@
   background-color: #393e46;
   font-size: 20px;
   padding: 8px;
+  border-radius: 18px;
+  min-width: 200px;
+}
+.status {
+  margin-right: auto;
+  font-size: 20px;
+  background-color: #db9430;
+  padding: 8px;
+  border: 2px solid white;
+  border-radius: 18px;
+  min-width: 150px;
 }
 
 @media only screen and (max-width: 720px) {

@@ -32,8 +32,7 @@ export default class home extends Component {
   getAllTransactions() {
     Axios.get(`http://localhost:8080/wallet/trans/${this.state.walletID}`).then(
       res => {
-        console.log(res.data.transactions);
-        this.setState({ transactions: res.data.transactions });
+        this.setState({ transactions: res.data.transfers });
       }
     );
   }
