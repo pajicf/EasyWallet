@@ -62,7 +62,7 @@ router.post(walletPath, (req, res) => {
     });
 });
 
-router.get(`${walletPath}/trans/:id?:coin?`, (req, res) => {
+router.get(`${walletPath}/trans:id?:coin?`, (req, res) => {
   var walletId = req.query.id;
   bitgo
     .coin(`${req.query.coin}`)
