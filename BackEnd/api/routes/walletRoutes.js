@@ -48,7 +48,6 @@ router.post(walletPath, (req, res) => {
       //print the new wallet
     })
     .catch(error => {
-      //res.status(500);
       res.json({ messsage: "Error!" });
     });
 });
