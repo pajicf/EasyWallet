@@ -13,36 +13,41 @@ export default class send extends Component {
     let amUSD = document.getElementById("inputAmountID").value;
     let amBTC = amUSD / this.state.btInUSD;
     let amSatoshi = amBTC * 1e8;
-    console.log(Math.round(amSatoshi));
     let rec = document.getElementById("receiver").value;
+    document.getElementById("inputAmountID").disabled = true;
+    document.getElementById("receiver").disabled = true;
+    document.getElementById("sendButton").disabled = true;
+    document.getElementById("sendButton").innerHTML = "Sending";
+    document.getElementById("sendButton").style.backgroundColor = "#fd9200";
     Axios.post("http://localhost:8080/wallet/send", {
       amount: Math.round(amSatoshi),
       address: rec,
       walletId: this.state.walletID
     })
       .then(res => {
-        window.location.reload(true);
+        console.log(res);
+        this.handleSendChange();
+        alert("Your transaction has been submitted and is now pending!");
       })
       .catch(error => {
+        this.handleSendChange();
         console.log(error);
+        alert(
+          "Error while submitting transaction! Please check your internet connection, your funds and try again later!"
+        );
       });
-
-    document.getElementById("inputAmountID").disabled = true;
-    document.getElementById("receiver").disabled = true;
-    document.getElementById("sendButton").disabled = true;
-    document.getElementById("sendButton").innerHTML = "Sending";
-    document.getElementById("sendButton").style.backgroundColor = "#fd9200";
-    setTimeout(() => {
-      document.getElementById("sendButton").style.backgroundColor = "#393e46";
-      document.getElementById("sendButton").disabled = false;
-      document.getElementById("inputAmountID").disabled = false;
-      document.getElementById("receiver").disabled = false;
-      document.getElementById("sendButton").innerHTML = "Send";
-      document.getElementById("receiver").value = null;
-      document.getElementById("inputAmountID").value = null;
-      this.setState({ ammInBTC: 0 });
-    }, 2000);
   };
+
+  handleSendChange() {
+    document.getElementById("sendButton").style.backgroundColor = "#393e46";
+    document.getElementById("sendButton").disabled = false;
+    document.getElementById("inputAmountID").disabled = false;
+    document.getElementById("receiver").disabled = false;
+    document.getElementById("sendButton").innerHTML = "Send";
+    document.getElementById("receiver").value = null;
+    document.getElementById("inputAmountID").value = null;
+    this.setState({ ammInBTC: 0 });
+  }
 
   componentWillMount() {
     this.setState({ walletID: this.props.wallID });
@@ -83,6 +88,7 @@ export default class send extends Component {
             className="inputSendAmount"
             placeholder="$"
             type="number"
+            min="0"
             onChange={() => this.handleChange()}
           />
           <p className="satoshis">Amount in BTC: {this.state.ammInBTC}</p>

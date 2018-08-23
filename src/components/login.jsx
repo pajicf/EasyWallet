@@ -1,21 +1,29 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import Axios from "axios";
+import { Redirect } from "react-router";
 import logo from "../images/logo.png";
 import "../css/login.css";
-import { runInThisContext } from "vm";
 
 export default class logIn extends Component {
   state = {
     wallet: {},
-    id: ""
+    id: "",
+    redirect: false
   };
 
   handleChange = data => {
     this.setState({ id: data });
   };
 
+  btnLogIn = () => {
+    this.props.chngWallId(this.state.id);
+    this.setState({ redirect: true });
+  };
+
   render() {
+    if (this.state.redirect) {
+      return <Redirect push to="/home" />;
+    }
+
     return (
       <div className="App">
         <div className="back" />
@@ -32,15 +40,14 @@ export default class logIn extends Component {
             onChange={event => this.handleChange(event.target.value)}
           />
           <div className="buttonsBox">
-            <Link to={`/home/${this.state.id}`}>
-              <button
-                onClick={this.getUserWallet}
-                style={{ backgroundColor: "#00adb5" }}
-                className="btnL"
-              >
-                Log in
-              </button>
-            </Link>
+            <button
+              onClick={this.btnLogIn}
+              style={{ backgroundColor: "#00adb5" }}
+              className="btnL"
+            >
+              Log in
+            </button>
+
             <a href="/new">
               <button className="btnL">New wallet</button>
             </a>
