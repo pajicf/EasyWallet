@@ -55,7 +55,6 @@ export default class send extends Component {
     document.getElementById("receiver").value = null;
     document.getElementById("inputAmountID").value = null;
     this.setState({ ammInBTC: 0 });
-    document.getElementById("refreshText").style.display = "block";
   }
 
   handleChange = () => {
@@ -94,7 +93,7 @@ export default class send extends Component {
           <input
             id="receiver"
             className="inputSendID"
-            placeholder="ID of reciever"
+            placeholder="Address of reciever"
             type="text"
           />
           <input

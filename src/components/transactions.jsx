@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import "../css/transactions.css";
-import { Link } from "react-router-dom";
 
 export default class Receive extends Component {
   state = {
@@ -45,15 +44,6 @@ export default class Receive extends Component {
         </div>
       );
     });
-    return (
-      <div>
-        <Link to="/" style={{ textDecoration: "none" }}>
-          <p id="refreshText" className="refresh">
-            To see new transactions, click here and then log in again
-          </p>
-        </Link>
-        {element}
-      </div>
-    );
+    return element;
   }
 }

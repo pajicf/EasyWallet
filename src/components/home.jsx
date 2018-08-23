@@ -3,11 +3,13 @@ import logo from "../images/logo.png";
 import btcLogo from "../images/btc.png";
 import ltcLogo from "../images/litecoin.svg";
 import btcBalance from "../images/balance.png";
+import logout from "../images/logout.png";
 import "../css/home.css";
 import Axios from "axios";
 import Receive from "./receive";
 import Send from "./send";
 import Transactions from "./transactions";
+import { Link } from "react-router-dom";
 
 export default class home extends Component {
   state = {
@@ -100,6 +102,7 @@ export default class home extends Component {
     if (bt === 3) {
       this.hideEl();
       this.showEl("transactionsDisplay", 3);
+      this.getAllTransactions();
     }
   };
 
@@ -135,6 +138,11 @@ export default class home extends Component {
               {this.state.balance / 1e8}{" "}
               {this.state.coin === "tbtc" ? "BTC" : "LTC"}
             </p>
+          </div>
+          <div className="logOut">
+            <Link to="/">
+              <img width="64px" height="64px" src={logout} />
+            </Link>
           </div>
         </header>
 
