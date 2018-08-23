@@ -35,14 +35,12 @@ export default class home extends Component {
   }
 
   getAllTransactions() {
-    console.log(this.state.walletID);
     Axios.get(
       `http://localhost:8080/wallet/trans?id=${this.state.walletID}&coin=${
         this.state.coin
       }`
     ).then(res => {
       this.setState({ transactions: res.data.transfers });
-      console.log(this.state.walletID);
     });
   }
 
