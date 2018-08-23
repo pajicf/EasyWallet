@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Redirect } from "react-router";
 import logo from "../images/logo.png";
 import "../css/login.css";
+import Axios from "axios";
 
 export default class logIn extends Component {
   state = {
@@ -16,7 +17,18 @@ export default class logIn extends Component {
 
   btnLogIn = () => {
     this.props.chngWallId(this.state.id);
-    this.setState({ redirect: true });
+    this.checkIfWalletExists();
+  };
+
+  checkIfWalletExists = () => {
+    Axios.get(`http://localhost:8080/wallet/${this.state.id}`)
+      .then(res => {
+        console.log(`Res: ${res}`);
+        this.setState({ redirect: true });
+      })
+      .catch(error => {
+        alert("WRONG WALLET ID");
+      });
   };
 
   render() {

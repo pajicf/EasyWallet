@@ -16,7 +16,6 @@ class App extends Component {
 
   changeWallId(id) {
     this.setState({ wallId: id });
-    console.log("oK" + id);
   }
 
   render() {

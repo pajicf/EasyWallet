@@ -36,7 +36,9 @@ router.get(`${walletPath}/:id`, (req, res) => {
       console.log(wallet._wallet);
     })
     .catch(error => {
-      res.json("Error:", error);
+      console.log("TEST");
+      res.status(404);
+      res.json({ message: error });
     });
 });
 router.post(walletPath, (req, res) => {
