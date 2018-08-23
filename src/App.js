@@ -9,13 +9,18 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      wallId: ""
+      wallId: "",
+      coin: ""
     };
     this.changeWallId = this.changeWallId.bind(this);
+    this.changeWallCoin = this.changeWallCoin.bind(this);
   }
 
   changeWallId(id) {
     this.setState({ wallId: id });
+  }
+  changeWallCoin(coin) {
+    this.setState({ coin: coin });
   }
 
   render() {
@@ -25,12 +30,19 @@ class App extends Component {
           <Route
             exact={true}
             path="/"
-            render={() => <LogIn chngWallId={this.changeWallId} />}
+            render={() => (
+              <LogIn
+                chngWallId={this.changeWallId}
+                chngWallCoin={this.changeWallCoin}
+              />
+            )}
           />
           <Route exact={true} path="/new" render={() => <NewWallet />} />
           <Route
             path="/home"
-            render={() => <Home wallId={this.state.wallId} />}
+            render={() => (
+              <Home wallId={this.state.wallId} coin="this.state.coin" />
+            )}
           />
         </div>
       </BrowserRouter>

@@ -8,7 +8,8 @@ export default class logIn extends Component {
   state = {
     wallet: {},
     id: "",
-    redirect: false
+    redirect: false,
+    coin: "tbtc"
   };
 
   handleChange = data => {
@@ -17,11 +18,14 @@ export default class logIn extends Component {
 
   btnLogIn = () => {
     this.props.chngWallId(this.state.id);
+    this.props.chngWallCoin(this.state.coin);
     this.checkIfWalletExists();
   };
 
   checkIfWalletExists = () => {
-    Axios.get(`http://localhost:8080/wallet?id=${this.state.id}&coin=tbtc`)
+    Axios.get(
+      `http://localhost:8080/wallet?id=${this.state.id}&coin=${this.state.coin}`
+    )
       .then(res => {
         console.log(`Res: ${res}`);
         this.setState({ redirect: true });
