@@ -23,11 +23,11 @@ router.use(function(req, res, next) {
   next();
 });
 
-router.get(`${walletPath}/:id`, (req, res) => {
-  const walletId = req.params.id;
+router.get(`${walletPath}:id?:coin?`, (req, res) => {
+  const walletId = req.query.id;
   console.log("WalletID:" + walletId);
   bitgo
-    .coin(`${req.body.coin}`)
+    .coin(`${req.query.coin}`)
     .wallets()
     .get({ id: walletId })
     .then(function(wallet) {
@@ -62,10 +62,10 @@ router.post(walletPath, (req, res) => {
     });
 });
 
-router.get(`${walletPath}/trans/:id`, (req, res) => {
-  var walletId = req.params.id;
+router.get(`${walletPath}/trans/:id?:coin?`, (req, res) => {
+  var walletId = req.query.id;
   bitgo
-    .coin(`${req.body.coin}`)
+    .coin(`${req.query.coin}`)
     .wallets()
     .get({ id: walletId })
     .then(function(wallet) {
