@@ -16,32 +16,37 @@ export default class send extends Component {
   }
 
   sendCash = () => {
-    document.getElementById("inputAmountID").disabled = true;
-    document.getElementById("receiver").disabled = true;
-    document.getElementById("sendButton").disabled = true;
-    document.getElementById("sendButton").innerHTML = "Sending";
-    document.getElementById("sendButton").style.backgroundColor = "#fd9200";
-
     let amUSD = document.getElementById("inputAmountID").value;
     let amBTC = amUSD / this.state.btInUSD;
     let amSmlUnit = amBTC * 1e8;
     let rec = document.getElementById("receiver").value;
-    Axios.post("http://localhost:8080/wallet/send", {
-      amount: Math.round(amSmlUnit),
-      address: rec,
-      walletId: this.state.walletID,
-      coin: this.state.coin
-    })
-      .then(res => {
-        this.handleSendChange();
-        alert("Your transaction has been submitted and is now pending!");
+    if (amSmlUnit <= 0) {
+      alert(
+        "Value has to be greater then zero, or you have not entered a number!!!"
+      );
+    } else {
+      document.getElementById("inputAmountID").disabled = true;
+      document.getElementById("receiver").disabled = true;
+      document.getElementById("sendButton").disabled = true;
+      document.getElementById("sendButton").innerHTML = "Sending";
+      document.getElementById("sendButton").style.backgroundColor = "#fd9200";
+      Axios.post("http://localhost:8080/wallet/send", {
+        amount: Math.round(amSmlUnit),
+        address: rec,
+        walletId: this.state.walletID,
+        coin: this.state.coin
       })
-      .catch(error => {
-        this.handleSendChange();
-        alert(
-          "Error while submitting transaction! Please check your internet connection, your funds and try again later!"
-        );
-      });
+        .then(res => {
+          this.handleSendChange();
+          alert("Your transaction has been submitted and is now pending!");
+        })
+        .catch(error => {
+          this.handleSendChange();
+          alert(
+            "Error while submitting transaction! Please check your internet connection, your funds and try again later!"
+          );
+        });
+    }
   };
 
   handleSendChange() {
