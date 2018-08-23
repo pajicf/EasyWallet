@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import logo from "../images/logo.png";
 import btcLogo from "../images/btc.png";
+import ltcLogo from "../images/litecoin.svg";
 import btcBalance from "../images/balance.png";
 import "../css/home.css";
 import Axios from "axios";
@@ -48,12 +49,14 @@ export default class home extends Component {
       Axios.get("https://blockchain.info/tobtc?currency=USD&value=1").then(
         res => {
           let a = 1 / res.data;
-          this.setState({ btInUSD: a.toFixed(2) });
+          this.setState({ btInUSD: a });
         }
       );
     } else if (this.state.coin === "tltc") {
-      Axios.get("https://api.cryptonator.com/api/ticker/ltc-usd", res => {
-        this.setState({ btInUSD: res.data.ticker.price.toFiexed(2) });
+      Axios.get("https://api.cryptonator.com/api/ticker/ltc-usd").then(res => {
+        let a = res.data.ticker.price;
+        console.log(a);
+        this.setState({ btInUSD: a });
       });
     }
   };
@@ -112,11 +115,13 @@ export default class home extends Component {
             <img
               width="64px"
               height="64px"
-              src={btcLogo}
+              src={this.state.coin === "tbtc" ? btcLogo : ltcLogo}
               alt="1 Bitcoin in euros"
             />
             <br />
-            <p style={{ color: "#eeeeee" }}>$ {this.state.btInUSD}</p>
+            <p style={{ color: "#eeeeee" }}>
+              $ {parseFloat(this.state.btInUSD.toString()).toFixed(2)}
+            </p>
           </div>
           <div className="btBalance">
             <img
