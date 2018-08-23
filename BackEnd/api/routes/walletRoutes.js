@@ -104,6 +104,7 @@ router.post(`${walletPath}/send`, (req, res) => {
         walletPassphrase: process.env.PassPhrase
       };
       wallet.send(params).then(transaction => {
+        res.json({ message: "Transaction signed!" });
         console.dir(transaction);
       });
     });
