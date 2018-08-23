@@ -10,7 +10,7 @@ class App extends Component {
     super(props);
     this.state = {
       wallId: "",
-      coin: ""
+      coin: "tbtc"
     };
     this.changeWallId = this.changeWallId.bind(this);
     this.changeWallCoin = this.changeWallCoin.bind(this);
@@ -37,7 +37,11 @@ class App extends Component {
               />
             )}
           />
-          <Route exact={true} path="/new" render={() => <NewWallet />} />
+          <Route
+            exact={true}
+            path="/new"
+            render={() => <NewWallet coin={this.state.coin} />}
+          />
           <Route
             path="/home"
             render={() => (

@@ -3,6 +3,7 @@ import { Redirect } from "react-router";
 import logo from "../images/logo.png";
 import ltc from "../images/litecoin.svg";
 import btc from "../images/btc.png";
+import { Link } from "react-router-dom";
 import "../css/login.css";
 import Axios from "axios";
 
@@ -26,7 +27,6 @@ export default class logIn extends Component {
 
   btnLogIn = () => {
     this.props.chngWallId(this.state.id);
-    this.props.chngWallCoin(this.state.coin);
     this.checkIfWalletExists();
   };
 
@@ -51,6 +51,7 @@ export default class logIn extends Component {
       document.getElementById("btnType1").style.backgroundColor = "#fd9200";
       document.getElementById("btnType1").style.boxShadow = "0 0 60px #faa02a";
       this.setState({ coin: "tbtc" });
+      this.props.chngWallCoin("tbtc");
     } else {
       document.getElementById("btnType1").style.backgroundColor =
         "rgba(0,0,0,0)";
@@ -58,6 +59,7 @@ export default class logIn extends Component {
       document.getElementById("btnType2").style.backgroundColor = "#bdbdbd";
       document.getElementById("btnType2").style.boxShadow = "0 0 60px #747272";
       this.setState({ coin: "tltc" });
+      this.props.chngWallCoin("tltc");
     }
   }
 
@@ -107,9 +109,9 @@ export default class logIn extends Component {
               Log in
             </button>
 
-            <a href="/new">
+            <Link to="/new">
               <button className="btnL">New wallet</button>
-            </a>
+            </Link>
           </div>
         </div>
       </div>
