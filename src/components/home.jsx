@@ -139,7 +139,7 @@ export default class home extends Component {
           </div>
           <div className="logOut">
             <Link to="/">
-              <img width="64px" height="64px" src={logout} />
+              <img alt="Log out" width="64px" height="64px" src={logout} />
             </Link>
           </div>
         </header>
