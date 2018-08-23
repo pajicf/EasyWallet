@@ -23,7 +23,6 @@ export default class Receive extends Component {
         this.state.coin
       }`
     ).then(res => {
-      console.dir(res);
       this.setState({ recAddress: res.data.receiveAddress.address });
     });
   };
