@@ -3,9 +3,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 var router = express.Router();
 const walletPath = "/wallet";
-//var controller=require('../controllers/walletController');
 var bitgo = require("../authentication");
-//console.log(bitgo);
 router.use(bodyParser.json());
 router.use(
   bodyParser.urlencoded({
@@ -25,24 +23,19 @@ router.use(function(req, res, next) {
 
 router.get(`${walletPath}:id?:coin?`, (req, res) => {
   const walletId = req.query.id;
-  console.log("WalletID:" + walletId);
   bitgo
     .coin(`${req.query.coin}`)
     .wallets()
     .get({ id: walletId })
     .then(function(wallet) {
-      console.log();
       res.json(wallet._wallet);
-      console.log(wallet._wallet);
     })
     .catch(error => {
-      console.log("TEST");
       res.status(404);
       res.json({ message: error });
     });
 });
 router.post(walletPath, (req, res) => {
-  console.log("ubij me");
   bitgo
     .coin(`${req.body.coin}`)
     .wallets()
@@ -51,10 +44,8 @@ router.post(walletPath, (req, res) => {
       passphrase: process.env.PassPhrase
     })
     .then(function(wallet) {
-      // wallet=wallet._wallet;
       res.json(wallet.wallet._wallet);
       //print the new wallet
-      console.log(wallet);
     })
     .catch(error => {
       //res.status(500);

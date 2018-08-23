@@ -18,7 +18,6 @@ export default class Receive extends Component {
   }
 
   getAdd = () => {
-    console.log(this.state.walletID);
     Axios.get(
       `http://localhost:8080/wallet?id=${this.state.walletID}&coin=${
         this.state.coin

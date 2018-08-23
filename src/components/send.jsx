@@ -33,13 +33,11 @@ export default class send extends Component {
       coin: this.state.coin
     })
       .then(res => {
-        console.log(res);
         this.handleSendChange();
         alert("Your transaction has been submitted and is now pending!");
       })
       .catch(error => {
         this.handleSendChange();
-        console.log(error);
         alert(
           "Error while submitting transaction! Please check your internet connection, your funds and try again later!"
         );
@@ -80,7 +78,6 @@ export default class send extends Component {
     } else if (this.state.coin === "tltc") {
       Axios.get("https://api.cryptonator.com/api/ticker/ltc-usd").then(res => {
         let a = res.data.ticker.price;
-        console.log(a);
         this.setState({ btInUSD: a });
       });
     }
