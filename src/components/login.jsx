@@ -1,23 +1,29 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Redirect } from "react-router";
 import logo from "../images/logo.png";
 import "../css/login.css";
 
 export default class logIn extends Component {
   state = {
     wallet: {},
-    id: ""
+    id: "",
+    redirect: false
   };
 
   handleChange = data => {
     this.setState({ id: data });
   };
 
-  getUserWallet = () => {
+  btnLogIn = () => {
     this.props.chngWallId(this.state.id);
+    this.setState({ redirect: true });
   };
 
   render() {
+    if (this.state.redirect) {
+      return <Redirect push to="/home" />;
+    }
+
     return (
       <div className="App">
         <div className="back" />
@@ -35,17 +41,11 @@ export default class logIn extends Component {
           />
           <div className="buttonsBox">
             <button
-              onClick={this.getUserWallet}
+              onClick={this.btnLogIn}
               style={{ backgroundColor: "#00adb5" }}
               className="btnL"
             >
-              <Link
-                style={{ textDecoration: "none" }}
-                className="linkToHome"
-                to={`/home`}
-              >
-                Log in
-              </Link>
+              Log in
             </button>
 
             <a href="/new">

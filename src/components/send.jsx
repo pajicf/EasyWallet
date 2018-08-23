@@ -19,7 +19,7 @@ export default class send extends Component {
     document.getElementById("sendButton").disabled = true;
     document.getElementById("sendButton").innerHTML = "Sending";
     document.getElementById("sendButton").style.backgroundColor = "#fd9200";
-    Axios.post("http://localhost:8080/wallet/send/test/test", {
+    Axios.post("http://localhost:8080/wallet/send", {
       amount: Math.round(amSatoshi),
       address: rec,
       walletId: this.state.walletID

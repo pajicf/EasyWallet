@@ -18,6 +18,7 @@ class App extends Component {
     this.setState({ wallId: id });
     console.log("oK" + id);
   }
+
   render() {
     return (
       <BrowserRouter>
