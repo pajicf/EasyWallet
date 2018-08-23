@@ -18,7 +18,7 @@ export default class logIn extends Component {
   componentDidMount() {
     document.getElementById("btnType1").style.backgroundColor = "#fd9200";
     document.getElementById("btnType1").style.boxShadow = "0 0 60px #faa02a";
-    document.getElementById("btnType1").style.flexGrow = "2";
+    document.getElementById("btnType1").focus = true;
   }
 
   handleChange = data => {
