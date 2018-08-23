@@ -27,7 +27,7 @@ router.get(`${walletPath}/:id`, (req, res) => {
   const walletId = req.params.id;
   console.log("WalletID:" + walletId);
   bitgo
-    .coin("tbtc")
+    .coin(`${req.body.coin}`)
     .wallets()
     .get({ id: walletId })
     .then(function(wallet) {
@@ -42,7 +42,7 @@ router.get(`${walletPath}/:id`, (req, res) => {
 router.post(walletPath, (req, res) => {
   console.log("ubij me");
   bitgo
-    .coin("tbtc")
+    .coin()
     .wallets()
     .generateWallet({
       label: "My Test Wallet",
@@ -79,7 +79,7 @@ router.post(walletPath, (req, res) => {
 router.get(`${walletPath}/trans/:id`, (req, res) => {
   var walletId = req.params.id;
   bitgo
-    .coin("tbtc")
+    .coin(`${req.body.coin}`                                        )
     .wallets()
     .get({ id: walletId })
     .then(function(wallet) {
@@ -92,7 +92,7 @@ router.get(`${walletPath}/trans/:id`, (req, res) => {
 
 router.post(`${walletPath}/send`, (req, res) => {
   bitgo
-    .coin("tbtc")
+    .coin(`${req.body.coin}`)
     .wallets()
     .get({ id: req.body.walletId })
     .then(function(wallet) {
