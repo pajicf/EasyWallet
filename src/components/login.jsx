@@ -21,7 +21,7 @@ export default class logIn extends Component {
   };
 
   checkIfWalletExists = () => {
-    Axios.get(`http://localhost:8080/wallet/${this.state.id}`)
+    Axios.get(`http://localhost:8080/wallet?id=${this.state.id}&coin=tbtc`)
       .then(res => {
         console.log(`Res: ${res}`);
         this.setState({ redirect: true });
