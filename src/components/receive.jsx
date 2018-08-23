@@ -5,11 +5,13 @@ import Axios from "axios";
 export default class Receive extends Component {
   state = {
     walletID: "",
-    recAddress: ""
+    recAddress: "",
+    coin: ""
   };
 
   componentWillMount() {
     this.setState({ walletID: this.props.wallID });
+    this.setState({ coin: this.props.coin });
   }
   componentDidMount() {
     this.getAdd();
@@ -17,12 +19,14 @@ export default class Receive extends Component {
 
   getAdd = () => {
     console.log(this.state.walletID);
-    Axios.get(`http://localhost:8080/wallet/${this.state.walletID}`).then(
-      res => {
-        console.dir(res);
-        this.setState({ recAddress: res.data.receiveAddress.address });
-      }
-    );
+    Axios.get(
+      `http://localhost:8080/wallet?id=${this.state.walletID}&coin=${
+        this.state.coin
+      }`
+    ).then(res => {
+      console.dir(res);
+      this.setState({ recAddress: res.data.receiveAddress.address });
+    });
   };
 
   render() {

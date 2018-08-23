@@ -12,7 +12,8 @@ export default class home extends Component {
   state = {
     btInUSD: 0,
     walletID: "",
-    balance: "/",
+    balance: 0,
+    coin: "",
     transactions: []
   };
 
@@ -27,33 +28,45 @@ export default class home extends Component {
 
   componentWillMount() {
     this.setState({ walletID: this.props.wallId });
-    console.log(this.props.wallId);
+    this.setState({ coin: this.props.coin });
   }
 
   getAllTransactions() {
-    Axios.get(`http://localhost:8080/wallet/trans/${this.state.walletID}`).then(
-      res => {
-        this.setState({ transactions: res.data.transfers });
-      }
-    );
+    console.log(this.state.walletID);
+    Axios.get(
+      `http://localhost:8080/wallet/trans?id=${this.state.walletID}&coin=${
+        this.state.coin
+      }`
+    ).then(res => {
+      this.setState({ transactions: res.data.transfers });
+      console.log(this.state.walletID);
+    });
   }
 
   getBitInUSD = () => {
-    Axios.get("https://blockchain.info/tobtc?currency=USD&value=1").then(
-      res => {
-        let a = 1 / res.data;
-        this.setState({ btInUSD: a.toFixed(2) });
-      }
-    );
+    if (this.state.coin === "tbtc") {
+      Axios.get("https://blockchain.info/tobtc?currency=USD&value=1").then(
+        res => {
+          let a = 1 / res.data;
+          this.setState({ btInUSD: a.toFixed(2) });
+        }
+      );
+    } else if (this.state.coin === "tltc") {
+      Axios.get("https://api.cryptonator.com/api/ticker/ltc-usd", res => {
+        this.setState({ btInUSD: res.data.ticker.price.toFiexed(2) });
+      });
+    }
   };
 
   getBitBalance = () => {
-    Axios.get(`http://localhost:8080/wallet/${this.state.walletID}`).then(
-      res => {
-        console.dir(res);
-        this.setState({ balance: res.data.balance });
-      }
-    );
+    Axios.get(
+      `http://localhost:8080/wallet?id=${this.state.walletID}&coin=${
+        this.state.coin
+      }`
+    ).then(res => {
+      console.dir(res);
+      this.setState({ balance: res.data.balance });
+    });
   };
 
   hideEl = () => {
@@ -134,15 +147,20 @@ export default class home extends Component {
             </button>
           </div>
           <div id="sendDisplay">
-            <Send wallID={this.state.walletID} balance={this.state.balance} />
+            <Send
+              wallID={this.state.walletID}
+              balance={this.state.balance}
+              coin={this.state.coin}
+            />
           </div>
           <div id="receiveDisplay">
-            <Receive wallID={this.state.walletID} />
+            <Receive wallID={this.state.walletID} coin={this.state.coin} />
           </div>
           <div id="transactionsDisplay">
             <Transactions
               trans={this.state.transactions}
               wallID={this.state.walletID}
+              coin={this.state.coin}
             />
           </div>
         </div>
