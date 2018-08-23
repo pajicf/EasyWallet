@@ -15,7 +15,7 @@ export default class newWallet extends Component {
   };
 
   componentDidMount() {
-    //this.generateNewWallet();
+    this.generateNewWallet();
   }
 
   componentWillMount() {
@@ -61,6 +61,7 @@ export default class newWallet extends Component {
           >
             <div style={{ width: "100%", marginBottom: "4px" }}>
               <img
+                alt="Coin"
                 width="32px"
                 height="32px"
                 src={this.state.coin === "tbtc" ? btc : ltc}

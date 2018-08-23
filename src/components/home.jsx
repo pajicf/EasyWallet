@@ -55,19 +55,17 @@ export default class home extends Component {
     } else if (this.state.coin === "tltc") {
       Axios.get("https://api.cryptonator.com/api/ticker/ltc-usd").then(res => {
         let a = res.data.ticker.price;
-        console.log(a);
         this.setState({ btInUSD: a });
       });
     }
   };
 
   getBitBalance = () => {
-    Axios.get(
-      `http://localhost:8080/wallet?id=${this.state.walletID}&coin=${
-        this.state.coin
-      }`
-    ).then(res => {
-      console.dir(res);
+    let kurac = `http://localhost:8080/wallet?id=${this.state.walletID}&coin=${
+      this.state.coin
+    }`;
+    Axios.get(kurac).then(res => {
+      // console.dir(res);
       this.setState({ balance: res.data.balance });
     });
   };
@@ -134,7 +132,8 @@ export default class home extends Component {
             <p style={{ color: "#eeeeee" }}>
               Balance:
               <br />
-              {this.state.balance / 1e8} TBTC
+              {this.state.balance / 1e8}{" "}
+              {this.state.coin === "tbtc" ? "BTC" : "LTC"}
             </p>
           </div>
         </header>

@@ -91,6 +91,7 @@ router.post(`${walletPath}/send`, (req, res) => {
       };
       wallet.send(params).then(transaction => {
         console.dir(transaction);
+        res.json({ message: "sent" });
       });
     });
 });
