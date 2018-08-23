@@ -55,6 +55,7 @@ export default class send extends Component {
     document.getElementById("receiver").value = null;
     document.getElementById("inputAmountID").value = null;
     this.setState({ ammInBTC: 0 });
+    document.getElementById("refreshText").style.display = "block";
   }
 
   handleChange = () => {
