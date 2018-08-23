@@ -44,7 +44,7 @@ router.get(`${walletPath}/:id`, (req, res) => {
 router.post(walletPath, (req, res) => {
   console.log("ubij me");
   bitgo
-    .coin()
+    .coin(`${req.body.coin}`)
     .wallets()
     .generateWallet({
       label: "My Test Wallet",
@@ -65,7 +65,7 @@ router.post(walletPath, (req, res) => {
 router.get(`${walletPath}/trans/:id`, (req, res) => {
   var walletId = req.params.id;
   bitgo
-    .coin(`${req.body.coin}`                                        )
+    .coin(`${req.body.coin}`)
     .wallets()
     .get({ id: walletId })
     .then(function(wallet) {
