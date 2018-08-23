@@ -54,22 +54,6 @@ router.post(walletPath, (req, res) => {
       //print the new wallet
       console.log(wallet);
     })
-    /*.then(function(wallet) {
-      return wallet.addWebhook({
-        url: 'http://localhost:8080/wallet/transfer',
-        type: "transfer"
-      });
-    })
-    .then(function(wallet) {
-      return wallet.addWebhook({
-        url: 'http://localhost:8080/wallet/approve',
-        type: "pendingapproval"
-      });
-    })
-    .then(function(webhook) {
-      // print the new webhook
-      console.dir(webhook);
-    })*/
     .catch(error => {
       //res.status(500);
       res.json({ messsage: "Error!" });
@@ -93,10 +77,10 @@ router.get(`${walletPath}/trans/:id`, (req, res) => {
 router.post(`${walletPath}/send`, (req, res) => {
   bitgo
     .coin(`${req.body.coin}`)
+
     .wallets()
     .get({ id: req.body.walletId })
     .then(function(wallet) {
-      //build
       console.dir(req.body.address);
       let params = {
         amount: req.body.amount,
@@ -104,23 +88,15 @@ router.post(`${walletPath}/send`, (req, res) => {
         walletPassphrase: process.env.PassPhrase
       };
       wallet.send(params).then(transaction => {
-        res.json({ message: "Transaction signed!" });
         console.dir(transaction);
       });
     });
 });
 
-router.get(`${walletPath}/transfer`, (req, res) => {});
-router.get(`${walletPath}/approve`, (req, res) => {
-  //set up a system where whenever our send transaction is approved we get info back
-  //and notify the front with the nessecary information. :)
-});
 router.post(`${walletPath}/addr/:id`, (req, res) => {
   wallet.getAddress({ id: `${req.params.id}` }).then(function(address) {
-    // print address
     res.json(address.address);
     console.dir(address);
   });
-  //gets the public key, that is sent to the frontend
 });
 module.exports = router;
