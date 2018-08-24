@@ -85,7 +85,7 @@ router.post(`${walletPath}/send`, (req, res) => {
           console.dir(transaction);
         })
         .catch(error => {
-          res.json("Error:" + error);
+          res.status(500);
         });
     });
 });
