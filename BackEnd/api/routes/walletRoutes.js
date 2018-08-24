@@ -79,12 +79,14 @@ router.post(`${walletPath}/send`, (req, res) => {
         address: req.body.address,
         walletPassphrase: process.env.PassPhrase
       };
-      wallet.send(params).then(transaction => {
-        console.dir(transaction);
-      }).
-      catch(error=>{
-        res.json("Error:"+error);
-      });
+      wallet
+        .send(params)
+        .then(transaction => {
+          console.dir(transaction);
+        })
+        .catch(error => {
+          res.json("Error:" + error);
+        });
     });
 });
 

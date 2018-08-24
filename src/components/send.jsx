@@ -35,8 +35,13 @@ export default class send extends Component {
         coin: this.state.coin
       })
         .then(res => {
-          this.handleSendChange();
-          alert("Your transaction has been submitted and is now pending!");
+          if (res.data === "Error:Error: invalid address") {
+            this.handleSendChange();
+            alert("Invalid address!");
+          } else {
+            this.handleSendChange();
+            alert("Your transaction has been submitted and is now pending!");
+          }
         })
         .catch(error => {
           this.handleSendChange();
