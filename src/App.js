@@ -45,7 +45,12 @@ class App extends Component {
           <Route
             path="/home"
             render={() => (
-              <Home wallId={this.state.wallId} coin={this.state.coin} />
+              <Home
+                wallId={this.state.wallId}
+                coin={this.state.coin}
+                changeWallCoin={this.changeWallCoin}
+                changeWallId={this.changeWallId}
+              />
             )}
           />
         </div>

@@ -9,7 +9,7 @@ import Axios from "axios";
 import Receive from "./receive";
 import Send from "./send";
 import Transactions from "./transactions";
-import { Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 export default class home extends Component {
   state = {
@@ -17,7 +17,8 @@ export default class home extends Component {
     walletID: "",
     balance: 0,
     coin: "",
-    transactions: []
+    transactions: [],
+    logout: false
   };
 
   componentDidMount() {
@@ -111,7 +112,18 @@ export default class home extends Component {
     }
   };
 
+  handleLogOut = () => {
+    sessionStorage.setItem("wallId", "");
+    sessionStorage.setItem("coin", "");
+    this.props.changeWallCoin("tbtc");
+    this.props.changeWallId("");
+    this.setState({ logout: true });
+  };
+
   render() {
+    if (this.state.logout) {
+      return <Redirect to="/" />;
+    }
     return (
       <div className="App">
         <header className="home-header">
@@ -145,9 +157,13 @@ export default class home extends Component {
             </p>
           </div>
           <div className="logOut">
-            <Link to="/">
-              <img alt="Log out" width="64px" height="64px" src={logout} />
-            </Link>
+            <img
+              alt="Log out"
+              width="64px"
+              height="64px"
+              src={logout}
+              onClick={this.handleLogOut}
+            />
           </div>
         </header>
 
