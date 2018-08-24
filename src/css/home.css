@@ -78,6 +78,9 @@
   flex-wrap: wrap;
   justify-content: center;
 }
+.logOut {
+  margin-right: 16px;
+}
 @keyframes bar {
   from {
     height: 0px;

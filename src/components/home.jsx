@@ -1,18 +1,22 @@
 import React, { Component } from "react";
 import logo from "../images/logo.png";
 import btcLogo from "../images/btc.png";
+import ltcLogo from "../images/litecoin.svg";
 import btcBalance from "../images/balance.png";
+import logout from "../images/logout.png";
 import "../css/home.css";
 import Axios from "axios";
 import Receive from "./receive";
 import Send from "./send";
 import Transactions from "./transactions";
+import { Link } from "react-router-dom";
 
 export default class home extends Component {
   state = {
     btInUSD: 0,
     walletID: "",
-    balance: "/",
+    balance: 0,
+    coin: "",
     transactions: []
   };
 
@@ -27,33 +31,43 @@ export default class home extends Component {
 
   componentWillMount() {
     this.setState({ walletID: this.props.wallId });
-    console.log(this.props.wallId);
+    this.setState({ coin: this.props.coin });
   }
 
   getAllTransactions() {
-    Axios.get(`http://localhost:8080/wallet/trans/${this.state.walletID}`).then(
-      res => {
-        this.setState({ transactions: res.data.transfers });
-      }
-    );
+    Axios.get(
+      `http://localhost:8080/wallet/trans?id=${this.state.walletID}&coin=${
+        this.state.coin
+      }`
+    ).then(res => {
+      this.setState({ transactions: res.data.transfers });
+    });
   }
 
   getBitInUSD = () => {
-    Axios.get("https://blockchain.info/tobtc?currency=USD&value=1").then(
-      res => {
-        let a = 1 / res.data;
-        this.setState({ btInUSD: a.toFixed(2) });
-      }
-    );
+    if (this.state.coin === "tbtc") {
+      Axios.get("https://blockchain.info/tobtc?currency=USD&value=1").then(
+        res => {
+          let a = 1 / res.data;
+          this.setState({ btInUSD: a });
+        }
+      );
+    } else if (this.state.coin === "tltc") {
+      Axios.get("https://api.cryptonator.com/api/ticker/ltc-usd").then(res => {
+        let a = res.data.ticker.price;
+        this.setState({ btInUSD: a });
+      });
+    }
   };
 
   getBitBalance = () => {
-    Axios.get(`http://localhost:8080/wallet/${this.state.walletID}`).then(
-      res => {
-        console.dir(res);
-        this.setState({ balance: res.data.balance });
-      }
-    );
+    let kurac = `http://localhost:8080/wallet?id=${this.state.walletID}&coin=${
+      this.state.coin
+    }`;
+    Axios.get(kurac).then(res => {
+      // console.dir(res);
+      this.setState({ balance: res.data.balance });
+    });
   };
 
   hideEl = () => {
@@ -86,6 +100,7 @@ export default class home extends Component {
     if (bt === 3) {
       this.hideEl();
       this.showEl("transactionsDisplay", 3);
+      this.getAllTransactions();
     }
   };
 
@@ -99,11 +114,13 @@ export default class home extends Component {
             <img
               width="64px"
               height="64px"
-              src={btcLogo}
+              src={this.state.coin === "tbtc" ? btcLogo : ltcLogo}
               alt="1 Bitcoin in euros"
             />
             <br />
-            <p style={{ color: "#eeeeee" }}>$ {this.state.btInUSD}</p>
+            <p style={{ color: "#eeeeee" }}>
+              $ {parseFloat(this.state.btInUSD.toString()).toFixed(2)}
+            </p>
           </div>
           <div className="btBalance">
             <img
@@ -116,8 +133,14 @@ export default class home extends Component {
             <p style={{ color: "#eeeeee" }}>
               Balance:
               <br />
-              {this.state.balance / 1e8} TBTC
+              {this.state.balance / 1e8}{" "}
+              {this.state.coin === "tbtc" ? "BTC" : "LTC"}
             </p>
+          </div>
+          <div className="logOut">
+            <Link to="/">
+              <img alt="Log out" width="64px" height="64px" src={logout} />
+            </Link>
           </div>
         </header>
 
@@ -134,15 +157,20 @@ export default class home extends Component {
             </button>
           </div>
           <div id="sendDisplay">
-            <Send wallID={this.state.walletID} balance={this.state.balance} />
+            <Send
+              wallID={this.state.walletID}
+              balance={this.state.balance}
+              coin={this.state.coin}
+            />
           </div>
           <div id="receiveDisplay">
-            <Receive wallID={this.state.walletID} />
+            <Receive wallID={this.state.walletID} coin={this.state.coin} />
           </div>
           <div id="transactionsDisplay">
             <Transactions
               trans={this.state.transactions}
               wallID={this.state.walletID}
+              coin={this.state.coin}
             />
           </div>
         </div>

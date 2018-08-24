@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router";
 import logo from "../images/logo.png";
+import ltc from "../images/litecoin.svg";
+import btc from "../images/btc.png";
+import { Link } from "react-router-dom";
 import "../css/login.css";
 import Axios from "axios";
 
@@ -8,8 +11,15 @@ export default class logIn extends Component {
   state = {
     wallet: {},
     id: "",
-    redirect: false
+    redirect: false,
+    coin: "tbtc"
   };
+
+  componentDidMount() {
+    document.getElementById("btnType1").style.backgroundColor = "#fd9200";
+    document.getElementById("btnType1").style.boxShadow = "0 0 60px #faa02a";
+    document.getElementById("btnType1").focus = true;
+  }
 
   handleChange = data => {
     this.setState({ id: data });
@@ -17,19 +27,47 @@ export default class logIn extends Component {
 
   btnLogIn = () => {
     this.props.chngWallId(this.state.id);
+    document.getElementById("btnLID").style.backgroundColor = "#BDBDBD";
+    document.getElementById("btnLID").innerHTML = "Logging in";
     this.checkIfWalletExists();
   };
 
   checkIfWalletExists = () => {
-    Axios.get(`http://localhost:8080/wallet/${this.state.id}`)
+    Axios.get(
+      `http://localhost:8080/wallet?id=${this.state.id}&coin=${this.state.coin}`
+    )
       .then(res => {
         console.log(`Res: ${res}`);
+        document.getElementById("btnLID").style.backgroundColor = "#00adb5";
+        document.getElementById("btnLID").innerHTML = "Log in";
         this.setState({ redirect: true });
       })
       .catch(error => {
+        document.getElementById("btnLID").style.backgroundColor = "#00adb5";
+        document.getElementById("btnLID").innerHTML = "Log in";
         alert("WRONG WALLET ID");
       });
   };
+
+  handleType(but) {
+    if (but === 1) {
+      document.getElementById("btnType2").style.backgroundColor =
+        "rgba(0,0,0,0)";
+      document.getElementById("btnType2").style.boxShadow = "none";
+      document.getElementById("btnType1").style.backgroundColor = "#fd9200";
+      document.getElementById("btnType1").style.boxShadow = "0 0 60px #faa02a";
+      this.setState({ coin: "tbtc" });
+      this.props.chngWallCoin("tbtc");
+    } else {
+      document.getElementById("btnType1").style.backgroundColor =
+        "rgba(0,0,0,0)";
+      document.getElementById("btnType1").style.boxShadow = "none";
+      document.getElementById("btnType2").style.backgroundColor = "#bdbdbd";
+      document.getElementById("btnType2").style.boxShadow = "0 0 60px #747272";
+      this.setState({ coin: "tltc" });
+      this.props.chngWallCoin("tltc");
+    }
+  }
 
   render() {
     if (this.state.redirect) {
@@ -43,6 +81,23 @@ export default class logIn extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <p className="headerText"> Easy Wallet</p>
         </header>
+        <div className="coinType">
+          <p className="chooseType"> Which curency do you want to use?</p>
+          <button
+            id="btnType1"
+            className="bitCoinBtn"
+            onClick={() => this.handleType(1)}
+          >
+            <img alt="img1" width="128px" height="128px" src={btc} />
+          </button>
+          <button
+            id="btnType2"
+            className="liteCoinBtn"
+            onClick={() => this.handleType(2)}
+          >
+            <img alt="img2" width="128px" height="128px" src={ltc} />
+          </button>
+        </div>
         <div className="box">
           <input
             id="ID"
@@ -53,6 +108,7 @@ export default class logIn extends Component {
           />
           <div className="buttonsBox">
             <button
+              id="btnLID"
               onClick={this.btnLogIn}
               style={{ backgroundColor: "#00adb5" }}
               className="btnL"
@@ -60,9 +116,9 @@ export default class logIn extends Component {
               Log in
             </button>
 
-            <a href="/new">
+            <Link to="/new">
               <button className="btnL">New wallet</button>
-            </a>
+            </Link>
           </div>
         </div>
       </div>

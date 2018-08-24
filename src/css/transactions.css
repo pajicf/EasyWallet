@@ -6,6 +6,7 @@
   margin: auto;
   margin-top: 16px;
   border-bottom: 2px solid white;
+  padding-bottom: 16px;
 }
 .receiverID {
   background-color: #eeeeee;
@@ -38,7 +39,6 @@
   border-radius: 18px;
   min-width: 150px;
 }
-
 @media only screen and (max-width: 720px) {
   .amountSent {
     font-size: 14px;

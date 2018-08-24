@@ -6,36 +6,47 @@ export default class send extends Component {
   state = {
     walletID: "",
     ammInBTC: 0,
-    btInUSD: 0
+    btInUSD: 0,
+    coin: ""
   };
+
+  componentWillMount() {
+    this.setState({ walletID: this.props.wallID });
+    this.setState({ coin: this.props.coin });
+  }
 
   sendCash = () => {
     let amUSD = document.getElementById("inputAmountID").value;
     let amBTC = amUSD / this.state.btInUSD;
-    let amSatoshi = amBTC * 1e8;
+    let amSmlUnit = amBTC * 1e8;
     let rec = document.getElementById("receiver").value;
-    document.getElementById("inputAmountID").disabled = true;
-    document.getElementById("receiver").disabled = true;
-    document.getElementById("sendButton").disabled = true;
-    document.getElementById("sendButton").innerHTML = "Sending";
-    document.getElementById("sendButton").style.backgroundColor = "#fd9200";
-    Axios.post("http://localhost:8080/wallet/send", {
-      amount: Math.round(amSatoshi),
-      address: rec,
-      walletId: this.state.walletID
-    })
-      .then(res => {
-        console.log(res);
-        this.handleSendChange();
-        alert("Your transaction has been submitted and is now pending!");
+    if (amSmlUnit <= 0) {
+      alert(
+        "Value has to be greater then zero, or you have not entered a number!!!"
+      );
+    } else {
+      document.getElementById("inputAmountID").disabled = true;
+      document.getElementById("receiver").disabled = true;
+      document.getElementById("sendButton").disabled = true;
+      document.getElementById("sendButton").innerHTML = "Sending";
+      document.getElementById("sendButton").style.backgroundColor = "#fd9200";
+      Axios.post("http://localhost:8080/wallet/send", {
+        amount: Math.round(amSmlUnit),
+        address: rec,
+        walletId: this.state.walletID,
+        coin: this.state.coin
       })
-      .catch(error => {
-        this.handleSendChange();
-        console.log(error);
-        alert(
-          "Error while submitting transaction! Please check your internet connection, your funds and try again later!"
-        );
-      });
+        .then(res => {
+          this.handleSendChange();
+          alert("Your transaction has been submitted and is now pending!");
+        })
+        .catch(error => {
+          this.handleSendChange();
+          alert(
+            "Error while submitting transaction! Please check your internet connection, your funds and try again later!"
+          );
+        });
+    }
   };
 
   handleSendChange() {
@@ -49,11 +60,18 @@ export default class send extends Component {
     this.setState({ ammInBTC: 0 });
   }
 
-  componentWillMount() {
-    this.setState({ walletID: this.props.wallID });
-  }
-
   handleChange = () => {
+    document.getElementById("inputAmountID").onkeydown = function(e) {
+      if (
+        !(
+          (e.keyCode > 95 && e.keyCode < 106) ||
+          (e.keyCode > 47 && e.keyCode < 58) ||
+          e.keyCode === 8
+        )
+      ) {
+        return false;
+      }
+    };
     let conv =
       document.getElementById("inputAmountID").value / this.state.btInUSD;
 
@@ -62,15 +80,23 @@ export default class send extends Component {
 
   componentDidMount() {
     this.getBitInUSD();
+    setInterval(this.getBitInUSD, 30000);
   }
 
   getBitInUSD = () => {
-    Axios.get("https://blockchain.info/tobtc?currency=USD&value=1").then(
-      res => {
-        let a = Math.round(1 / res.data);
+    if (this.state.coin === "tbtc") {
+      Axios.get("https://blockchain.info/tobtc?currency=USD&value=1").then(
+        res => {
+          let a = 1 / res.data;
+          this.setState({ btInUSD: a });
+        }
+      );
+    } else if (this.state.coin === "tltc") {
+      Axios.get("https://api.cryptonator.com/api/ticker/ltc-usd").then(res => {
+        let a = res.data.ticker.price;
         this.setState({ btInUSD: a });
-      }
-    );
+      });
+    }
   };
 
   render() {
@@ -80,7 +106,7 @@ export default class send extends Component {
           <input
             id="receiver"
             className="inputSendID"
-            placeholder="ID of reciever"
+            placeholder="Address of reciever"
             type="text"
           />
           <input
@@ -91,7 +117,10 @@ export default class send extends Component {
             min="0"
             onChange={() => this.handleChange()}
           />
-          <p className="satoshis">Amount in BTC: {this.state.ammInBTC}</p>
+          <p className="satoshis">
+            Amount in {this.state.coin === "tbtc" ? "BTC" : "LTC"}:{" "}
+            {this.state.ammInBTC}
+          </p>
           <div style={{ width: "100%" }}>
             <button
               id="sendButton"

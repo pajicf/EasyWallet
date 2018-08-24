@@ -65,6 +65,7 @@
   border-radius: 32px;
   border: none;
   outline: none;
+  transition: 0.25s;
 }
 .btnL:hover {
   border-bottom: 4px solid black;
@@ -74,6 +75,37 @@
 }
 .linkToHome:visited {
   color: white;
+}
+.bitCoinBtn {
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  transition: 0.25s;
+  flex-grow: 1;
+}
+.bitCoinBtn:focus,
+.liteCoinBtn:focus {
+  outline: none;
+  flex-grow: 2;
+}
+.liteCoinBtn {
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  flex-grow: 1;
+  transition: 0.25s;
+}
+.coinType {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 50%;
+  margin: auto;
+  margin-bottom: 5%;
+}
+.chooseType {
+  width: 100%;
+  font-size: 32px;
+  color: #272b35;
+  font-weight: bold;
 }
 @media only screen and (max-width: 720px) {
   .headerText {
