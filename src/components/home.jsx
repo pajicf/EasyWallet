@@ -21,8 +21,11 @@ export default class home extends Component {
   };
 
   componentDidMount() {
+    sessionStorage.setItem("wallId", this.state.walletID);
+    sessionStorage.setItem("coin", this.state.coin);
+    console.log(this.state.coin);
     this.getBitInUSD();
-    this.interval = setInterval(this.getBitInUSD, 30000);
+    this.interval = setInterval(this.getBitInUSD, 300000);
     this.hideEl();
     this.getBitBalance();
     this.interval = setInterval(this.getBitBalance, 30000);
@@ -30,8 +33,14 @@ export default class home extends Component {
   }
 
   componentWillMount() {
-    this.setState({ walletID: this.props.wallId });
-    this.setState({ coin: this.props.coin });
+    if (this.props.wallId !== "" && this.props.coin !== "") {
+      this.setState({ walletID: this.props.wallId });
+      this.setState({ coin: this.props.coin });
+    } else {
+      this.setState({ walletID: sessionStorage.getItem("wallId") });
+      this.setState({ coin: sessionStorage.getItem("coin") });
+      console.log(sessionStorage.getItem("coin"));
+    }
   }
 
   getAllTransactions() {
@@ -47,6 +56,7 @@ export default class home extends Component {
   getBitInUSD = () => {
     console.log("getUSD");
     if (this.props.coin === "tbtc") {
+      console.log(this.props.coin);
       Axios.get("https://blockchain.info/tobtc?currency=USD&value=1").then(
         res => {
           let a = 1 / res.data;
@@ -54,6 +64,7 @@ export default class home extends Component {
         }
       );
     } else if (this.props.coin === "tltc") {
+      console.log(this.props.coin);
       Axios.get("https://api.cryptonator.com/api/ticker/ltc-usd").then(res => {
         let a = res.data.ticker.price;
         this.setState({ btInUSD: a });
