@@ -38,7 +38,6 @@ export default class home extends Component {
     } else {
       this.setState({ walletID: sessionStorage.getItem("wallId") });
       this.setState({ coin: sessionStorage.getItem("coin") });
-      console.log(sessionStorage.getItem("coin"));
     }
   }
 
@@ -53,9 +52,7 @@ export default class home extends Component {
   }
 
   getBitInUSD = () => {
-    console.log("getUSD");
     if (this.state.coin === "tbtc") {
-      console.log(this.props.coin);
       Axios.get("https://blockchain.info/tobtc?currency=USD&value=1").then(
         res => {
           let a = 1 / res.data;
@@ -63,7 +60,6 @@ export default class home extends Component {
         }
       );
     } else if (this.state.coin === "tltc") {
-      console.log(this.props.coin);
       Axios.get("https://api.cryptonator.com/api/ticker/ltc-usd").then(res => {
         let a = res.data.ticker.price;
         this.setState({ btInUSD: a });
@@ -72,7 +68,6 @@ export default class home extends Component {
   };
 
   getBitBalance = () => {
-    console.log("getBal");
     let dest = `http://localhost:8080/wallet?id=${this.state.walletID}&coin=${
       this.state.coin
     }`;

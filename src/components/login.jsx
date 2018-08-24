@@ -37,7 +37,6 @@ export default class logIn extends Component {
       `http://localhost:8080/wallet?id=${this.state.id}&coin=${this.state.coin}`
     )
       .then(res => {
-        console.log(`Res: ${res}`);
         document.getElementById("btnLID").style.backgroundColor = "#00adb5";
         document.getElementById("btnLID").innerHTML = "Log in";
         this.setState({ redirect: true });
