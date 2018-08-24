@@ -20,16 +20,14 @@ export default class send extends Component {
     let amBTC = amUSD / this.state.btInUSD;
     let amSmlUnit = amBTC * 1e8;
     let rec = document.getElementById("receiver").value;
-    if (amSmlUnit <= 0) {
-      alert(
-        "Value has to be greater then zero, or you have not entered a number!!!"
-      );
+    if (amSmlUnit <= 0 || rec === "") {
+      alert("Addres or amount is not valid");
     } else {
       document.getElementById("inputAmountID").disabled = true;
       document.getElementById("receiver").disabled = true;
       document.getElementById("sendButton").disabled = true;
       document.getElementById("sendButton").innerHTML = "Sending";
-      document.getElementById("sendButton").style.backgroundColor = "#fd9200";
+      document.getElementById("sendButton").style.backgroundColor = "#BDBDBD";
       Axios.post("http://localhost:8080/wallet/send", {
         amount: Math.round(amSmlUnit),
         address: rec,
