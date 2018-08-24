@@ -20,7 +20,8 @@ export default class send extends Component {
     let amBTC = amUSD / this.state.btInUSD;
     let amSmlUnit = amBTC * 1e8;
     let rec = document.getElementById("receiver").value;
-    if (amSmlUnit <= 0 || rec === "") {
+    console.log(amSmlUnit + " " + this.props.balance);
+    if (amSmlUnit <= 0 || rec === "" || amSmlUnit >= this.props.balance) {
       alert("Addres or amount is not valid");
     } else {
       document.getElementById("inputAmountID").disabled = true;
