@@ -86,6 +86,7 @@ router.post(`${walletPath}/send`, (req, res) => {
         })
         .catch(error => {
           res.status(500);
+          res.json(error);
         });
     });
 });
