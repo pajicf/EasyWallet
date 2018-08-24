@@ -65,6 +65,7 @@
   border-radius: 32px;
   border: none;
   outline: none;
+  transition: 0.25s;
 }
 .btnL:hover {
   border-bottom: 4px solid black;

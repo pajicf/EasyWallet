@@ -27,6 +27,8 @@ export default class logIn extends Component {
 
   btnLogIn = () => {
     this.props.chngWallId(this.state.id);
+    document.getElementById("btnLID").style.backgroundColor = "#BDBDBD";
+    document.getElementById("btnLID").innerHTML = "Logging in";
     this.checkIfWalletExists();
   };
 
@@ -36,9 +38,13 @@ export default class logIn extends Component {
     )
       .then(res => {
         console.log(`Res: ${res}`);
+        document.getElementById("btnLID").style.backgroundColor = "#00adb5";
+        document.getElementById("btnLID").innerHTML = "Log in";
         this.setState({ redirect: true });
       })
       .catch(error => {
+        document.getElementById("btnLID").style.backgroundColor = "#00adb5";
+        document.getElementById("btnLID").innerHTML = "Log in";
         alert("WRONG WALLET ID");
       });
   };
@@ -102,6 +108,7 @@ export default class logIn extends Component {
           />
           <div className="buttonsBox">
             <button
+              id="btnLID"
               onClick={this.btnLogIn}
               style={{ backgroundColor: "#00adb5" }}
               className="btnL"
