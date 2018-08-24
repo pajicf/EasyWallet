@@ -23,7 +23,6 @@ export default class home extends Component {
   componentDidMount() {
     sessionStorage.setItem("wallId", this.state.walletID);
     sessionStorage.setItem("coin", this.state.coin);
-    console.log(this.state.coin);
     this.getBitInUSD();
     this.interval = setInterval(this.getBitInUSD, 300000);
     this.hideEl();
@@ -55,7 +54,7 @@ export default class home extends Component {
 
   getBitInUSD = () => {
     console.log("getUSD");
-    if (this.props.coin === "tbtc") {
+    if (this.state.coin === "tbtc") {
       console.log(this.props.coin);
       Axios.get("https://blockchain.info/tobtc?currency=USD&value=1").then(
         res => {
@@ -63,7 +62,7 @@ export default class home extends Component {
           this.setState({ btInUSD: a });
         }
       );
-    } else if (this.props.coin === "tltc") {
+    } else if (this.state.coin === "tltc") {
       console.log(this.props.coin);
       Axios.get("https://api.cryptonator.com/api/ticker/ltc-usd").then(res => {
         let a = res.data.ticker.price;
