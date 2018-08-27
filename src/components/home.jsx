@@ -26,10 +26,10 @@ export default class home extends Component {
     sessionStorage.setItem("wallId", this.state.walletID);
     sessionStorage.setItem("coin", this.state.coin);
     this.getBitInUSD();
-    this.interval = setInterval(this.getBitInUSD, 300000);
+    this.interval1 = setInterval(this.getBitInUSD, 300000);
     this.hideEl();
     this.getBitBalance();
-    this.interval = setInterval(this.getBitBalance, 30000);
+    this.interval2 = setInterval(this.getBitBalance, 30000);
     this.getAllTransactions();
   }
 
@@ -44,6 +44,11 @@ export default class home extends Component {
     this.setState({ serverPath: this.props.serverPath });
   }
 
+  componentWillUnmount() {
+    clearInterval(this.interval1);
+    clearInterval(this.interval2);
+  }
+
   getAllTransactions() {
     Axios.get(
       `${this.state.serverPath}/trans?id=${this.state.walletID}&coin=${
@@ -55,6 +60,7 @@ export default class home extends Component {
   }
 
   getBitInUSD = () => {
+    console.log("usd");
     if (this.state.coin === "tbtc") {
       Axios.get("https://blockchain.info/tobtc?currency=USD&value=1").then(
         res => {
@@ -71,6 +77,7 @@ export default class home extends Component {
   };
 
   getBitBalance = () => {
+    console.log("bal");
     let dest = `${this.state.serverPath}/?id=${this.state.walletID}&coin=${
       this.state.coin
     }`;
@@ -120,8 +127,8 @@ export default class home extends Component {
   handleLogOut = () => {
     sessionStorage.setItem("wallId", "");
     sessionStorage.setItem("coin", "");
-    this.props.changeWallCoin("tbtc");
-    this.props.changeWallId("");
+    this.props.chngWallCoin("tbtc");
+    this.props.chngWallId("");
     this.setState({ logout: true });
   };
 

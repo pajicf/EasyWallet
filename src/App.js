@@ -56,6 +56,8 @@ class App extends Component {
                 wallId={this.state.wallId}
                 coin={this.state.coin}
                 serverPath={this.state.serverPath}
+                chngWallCoin={this.changeWallCoin}
+                chngWallId={this.changeWallId}
               />
             )}
           />
