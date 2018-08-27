@@ -9,7 +9,7 @@ import Axios from "axios";
 import Receive from "./receive";
 import Send from "./send";
 import Transactions from "./transactions";
-import { Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 export default class home extends Component {
   state = {
@@ -17,21 +17,29 @@ export default class home extends Component {
     walletID: "",
     balance: 0,
     coin: "",
-    transactions: []
+    transactions: [],
+    logout: false
   };
 
   componentDidMount() {
+    sessionStorage.setItem("wallId", this.state.walletID);
+    sessionStorage.setItem("coin", this.state.coin);
     this.getBitInUSD();
-    setInterval(this.getBitInUSD, 300000);
+    this.interval = setInterval(this.getBitInUSD, 300000);
     this.hideEl();
     this.getBitBalance();
-    setInterval(this.getBitBalance, 30000);
+    this.interval = setInterval(this.getBitBalance, 30000);
     this.getAllTransactions();
   }
 
   componentWillMount() {
-    this.setState({ walletID: this.props.wallId });
-    this.setState({ coin: this.props.coin });
+    if (this.props.wallId !== "" && this.props.coin !== "") {
+      this.setState({ walletID: this.props.wallId });
+      this.setState({ coin: this.props.coin });
+    } else {
+      this.setState({ walletID: sessionStorage.getItem("wallId") });
+      this.setState({ coin: sessionStorage.getItem("coin") });
+    }
   }
 
   getAllTransactions() {
@@ -61,10 +69,10 @@ export default class home extends Component {
   };
 
   getBitBalance = () => {
-    let kurac = `http://localhost:8080/wallet?id=${this.state.walletID}&coin=${
+    let dest = `http://localhost:8080/wallet?id=${this.state.walletID}&coin=${
       this.state.coin
     }`;
-    Axios.get(kurac).then(res => {
+    Axios.get(dest).then(res => {
       // console.dir(res);
       this.setState({ balance: res.data.balance });
     });
@@ -104,7 +112,18 @@ export default class home extends Component {
     }
   };
 
+  handleLogOut = () => {
+    sessionStorage.setItem("wallId", "");
+    sessionStorage.setItem("coin", "");
+    this.props.changeWallCoin("tbtc");
+    this.props.changeWallId("");
+    this.setState({ logout: true });
+  };
+
   render() {
+    if (this.state.logout) {
+      return <Redirect to="/" />;
+    }
     return (
       <div className="App">
         <header className="home-header">
@@ -138,9 +157,13 @@ export default class home extends Component {
             </p>
           </div>
           <div className="logOut">
-            <Link to="/">
-              <img alt="Log out" width="64px" height="64px" src={logout} />
-            </Link>
+            <img
+              alt="Log out"
+              width="64px"
+              height="64px"
+              src={logout}
+              onClick={this.handleLogOut}
+            />
           </div>
         </header>
 

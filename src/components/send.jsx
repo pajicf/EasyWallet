@@ -36,7 +36,8 @@ export default class send extends Component {
         coin: this.state.coin
       })
         .then(res => {
-          if (res.data === "Error:Error: invalid address") {
+          console.dir(res);
+          if (res.data.error === "err") {
             this.handleSendChange();
             alert("Invalid address!");
           } else {
