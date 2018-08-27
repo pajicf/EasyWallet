@@ -6,12 +6,14 @@ export default class Receive extends Component {
   state = {
     walletID: "",
     recAddress: "",
-    coin: ""
+    coin: "",
+    serverPath: ""
   };
 
   componentWillMount() {
     this.setState({ walletID: this.props.wallID });
     this.setState({ coin: this.props.coin });
+    this.setState({ serverPath: this.props.serverPath });
   }
   componentDidMount() {
     this.getAdd();
@@ -19,7 +21,7 @@ export default class Receive extends Component {
 
   getAdd = () => {
     Axios.get(
-      `http://localhost:8080/wallet?id=${this.state.walletID}&coin=${
+      `${this.state.serverPath}?id=${this.state.walletID}&coin=${
         this.state.coin
       }`
     ).then(res => {

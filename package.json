@@ -35,7 +35,6 @@
     "url": "https://github.com/pajicf/EasyWallet/issues"
   },
   "devDependencies": {
-    "mocha": "^5.2.0",
     "nodemon": "^1.18.3"
   }
 }

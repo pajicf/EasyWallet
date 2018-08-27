@@ -6,12 +6,13 @@ import ltc from "../images/litecoin.svg";
 import btc from "../images/btc.png";
 import "../css/newWallet.css";
 
-export default class newWallet extends Component {
+export default class NewWallet extends Component {
   state = {
     wallet: {
       id: ""
     },
-    coin: ""
+    coin: "",
+    serverPath: ""
   };
 
   componentDidMount() {
@@ -20,11 +21,12 @@ export default class newWallet extends Component {
 
   componentWillMount() {
     this.setState({ coin: this.props.coin });
+    this.setState({ serverPath: this.props.serverPath });
   }
 
   generateNewWallet() {
     return new Promise((resolve, reject) => {
-      Axios.post("http://localhost:8080/wallet", { coin: this.state.coin })
+      Axios.post(`${this.state.serverPath}`, { coin: this.state.coin })
         .then(res => {
           document.getElementById("loader").style.display = "none";
           this.setState({ wallet: res.data });
@@ -56,22 +58,30 @@ export default class newWallet extends Component {
             style={{
               display: "flex",
               flexWrap: "wrap",
-              justifyContent: "center"
+              justifyContent: "center",
+              marginTop: "-30px"
             }}
           >
-            <div style={{ width: "100%", marginBottom: "4px" }}>
-              <img
-                alt="Coin"
-                width="32px"
-                height="32px"
-                src={this.state.coin === "tbtc" ? btc : ltc}
-              />
-              <span>
-                {"  "}
+            <div
+              style={{ width: "100%", marginBottom: "-18px", display: "block" }}
+            >
+              <p
+                style={{
+                  fontSize: "25px"
+                }}
+              >
+                <img
+                  align="top"
+                  alt="Coin"
+                  width="32px"
+                  height="32px"
+                  src={this.state.coin === "tbtc" ? btc : ltc}
+                />
+                {"   "}
                 This is your new wallet ID
-              </span>
+              </p>
             </div>
-            <div className="newWalletID">
+            <div className="newWalletID" style={{ display: "block" }}>
               {this.state.wallet.id}
               <img
                 alt="loader"

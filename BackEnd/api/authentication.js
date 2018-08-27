@@ -1,4 +1,4 @@
-const BitGoJS = require("bitgo");
+var BitGoJS = require("bitgo");
 require("dotenv").config();
 const access = process.env.ACCESS_TOKEN;
 var bitgo = new BitGoJS.BitGo({ env: "test", accessToken: `${access}` });

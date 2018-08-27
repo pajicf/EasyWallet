@@ -1,9 +1,9 @@
-const express = require("express");
+var express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const router = express.Router();
+var router = express.Router();
 const walletPath = "/wallet";
-const bitgo = require("../authentication");
+var bitgo = require("../authentication");
 router.use(bodyParser.json());
 router.use(
   bodyParser.urlencoded({
@@ -22,8 +22,12 @@ router.use(function(req, res, next) {
 });
 
 router.get(`${walletPath}:id?:coin?`, (req, res) => {
+<<<<<<< HEAD
   var walletId = req.query.id;
   console.log(walletId);
+=======
+  const walletId = req.query.id;
+>>>>>>> c830c359fceac4bdea00599aca63838e7aa5f7ac
   bitgo
     .coin(`${req.query.coin}`)
     .wallets()
@@ -101,6 +105,7 @@ router.post(`${walletPath}/send`, (req, res) => {
 router.post(`${walletPath}/addr/:id`, (req, res) => {
   wallet.getAddress({ id: `${req.params.id}` }).then(function(address) {
     res.json(address.address);
+    console.dir(address);
   });
 });
 module.exports = router;

@@ -7,12 +7,14 @@ export default class send extends Component {
     walletID: "",
     ammInBTC: 0,
     btInUSD: 0,
-    coin: ""
+    coin: "",
+    serverPath: ""
   };
 
   componentWillMount() {
     this.setState({ walletID: this.props.wallID });
     this.setState({ coin: this.props.coin });
+    this.setState({ serverPath: this.props.serverPath });
   }
 
   sendCash = () => {
@@ -27,9 +29,10 @@ export default class send extends Component {
       document.getElementById("inputAmountID").disabled = true;
       document.getElementById("receiver").disabled = true;
       document.getElementById("sendButton").disabled = true;
-      document.getElementById("sendButton").innerHTML = "Sending";
-      document.getElementById("sendButton").style.backgroundColor = "#BDBDBD";
-      Axios.post("http://localhost:8080/wallet/send", {
+      let sb = document.getElementById("sendButton");
+      sb.innerHTML = "Sending";
+      sb.style.backgroundColor = "#BDBDBD";
+      Axios.post(`${this.state.serverPath}/send`, {
         amount: Math.round(amSmlUnit),
         address: rec,
         walletId: this.state.walletID,
@@ -55,13 +58,16 @@ export default class send extends Component {
   };
 
   handleSendChange() {
-    document.getElementById("sendButton").style.backgroundColor = "#393e46";
-    document.getElementById("sendButton").disabled = false;
-    document.getElementById("inputAmountID").disabled = false;
-    document.getElementById("receiver").disabled = false;
-    document.getElementById("sendButton").innerHTML = "Send";
-    document.getElementById("receiver").value = null;
-    document.getElementById("inputAmountID").value = null;
+    let sb = document.getElementById("sendButton");
+    sb.style.backgroundColor = "#393e46";
+    sb.disabled = false;
+    sb.innerHTML = "Send";
+    let rec = document.getElementById("receiver");
+    rec.disabled = false;
+    rec.value = null;
+    let iaID = document.getElementById("inputAmountID");
+    iaID.value = null;
+    iaID.disabled = false;
     this.setState({ ammInBTC: 0 });
   }
 
