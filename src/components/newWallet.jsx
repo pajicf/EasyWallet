@@ -58,22 +58,30 @@ export default class NewWallet extends Component {
             style={{
               display: "flex",
               flexWrap: "wrap",
-              justifyContent: "center"
+              justifyContent: "center",
+              marginTop: "-30px"
             }}
           >
-            <div style={{ width: "100%", marginBottom: "4px" }}>
-              <img
-                alt="Coin"
-                width="32px"
-                height="32px"
-                src={this.state.coin === "tbtc" ? btc : ltc}
-              />
-              <span>
-                {"  "}
+            <div
+              style={{ width: "100%", marginBottom: "-18px", display: "block" }}
+            >
+              <p
+                style={{
+                  fontSize: "25px"
+                }}
+              >
+                <img
+                  align="top"
+                  alt="Coin"
+                  width="32px"
+                  height="32px"
+                  src={this.state.coin === "tbtc" ? btc : ltc}
+                />
+                {"   "}
                 This is your new wallet ID
-              </span>
+              </p>
             </div>
-            <div className="newWalletID">
+            <div className="newWalletID" style={{ display: "block" }}>
               {this.state.wallet.id}
               <img
                 alt="loader"
