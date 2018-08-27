@@ -4,12 +4,14 @@ import "../css/transactions.css";
 export default class Receive extends Component {
   state = {
     transactions: [],
-    walletId: ""
+    walletId: "",
+    serverPath: ""
   };
 
   componentWillMount() {
     this.setState({ transactions: this.props.trans });
     this.setState({ walletId: this.props.wallID });
+    this.setState({ serverPath: this.props.serverPath });
   }
 
   componentDidUpdate(prevProps, prevState) {

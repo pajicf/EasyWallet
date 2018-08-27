@@ -12,13 +12,19 @@ export default class logIn extends Component {
     wallet: {},
     id: "",
     redirect: false,
-    coin: "tbtc"
+    coin: "tbtc",
+    serverPath: ""
   };
 
+  componentWillMount() {
+    this.setState({ serverPath: this.props.serverPath });
+  }
+
   componentDidMount() {
-    document.getElementById("btnType1").style.backgroundColor = "#fd9200";
-    document.getElementById("btnType1").style.boxShadow = "0 0 60px #faa02a";
-    document.getElementById("btnType1").focus = true;
+    let btnType1 = document.getElementById("btnType1");
+    btnType1.style.backgroundColor = "#fd9200";
+    btnType1.style.boxShadow = "0 0 60px #faa02a";
+    btnType1.focus = true;
   }
 
   handleChange = data => {
@@ -27,42 +33,44 @@ export default class logIn extends Component {
 
   btnLogIn = () => {
     this.props.chngWallId(this.state.id);
-    document.getElementById("btnLID").style.backgroundColor = "#BDBDBD";
-    document.getElementById("btnLID").innerHTML = "Logging in";
+    let btnLID = document.getElementById("btnLID");
+    btnLID.style.backgroundColor = "#BDBDBD";
+    btnLID.innerHTML = "Logging in";
     this.checkIfWalletExists();
   };
 
   checkIfWalletExists = () => {
+    let btnLID = document.getElementById("btnLID");
     Axios.get(
-      `http://localhost:8080/wallet?id=${this.state.id}&coin=${this.state.coin}`
+      `${this.state.serverPath}?id=${this.state.id}&coin=${this.state.coin}`
     )
       .then(res => {
-        document.getElementById("btnLID").style.backgroundColor = "#00adb5";
-        document.getElementById("btnLID").innerHTML = "Log in";
+        btnLID.style.backgroundColor = "#00adb5";
+        btnLID.innerHTML = "Log in";
         this.setState({ redirect: true });
       })
       .catch(error => {
-        document.getElementById("btnLID").style.backgroundColor = "#00adb5";
-        document.getElementById("btnLID").innerHTML = "Log in";
+        btnLID.style.backgroundColor = "#00adb5";
+        btnLID.innerHTML = "Log in";
         alert("WRONG WALLET ID");
       });
   };
 
   handleType(but) {
+    let btnType1 = document.getElementById("btnType1");
+    let btnType2 = document.getElementById("btnType2");
     if (but === 1) {
-      document.getElementById("btnType2").style.backgroundColor =
-        "rgba(0,0,0,0)";
-      document.getElementById("btnType2").style.boxShadow = "none";
-      document.getElementById("btnType1").style.backgroundColor = "#fd9200";
-      document.getElementById("btnType1").style.boxShadow = "0 0 60px #faa02a";
+      btnType2.style.backgroundColor = "rgba(0,0,0,0)";
+      btnType2.style.boxShadow = "none";
+      btnType1.style.backgroundColor = "#fd9200";
+      btnType1.style.boxShadow = "0 0 60px #faa02a";
       this.setState({ coin: "tbtc" });
       this.props.chngWallCoin("tbtc");
     } else {
-      document.getElementById("btnType1").style.backgroundColor =
-        "rgba(0,0,0,0)";
-      document.getElementById("btnType1").style.boxShadow = "none";
-      document.getElementById("btnType2").style.backgroundColor = "#bdbdbd";
-      document.getElementById("btnType2").style.boxShadow = "0 0 60px #747272";
+      btnType1.style.backgroundColor = "rgba(0,0,0,0)";
+      btnType1.style.boxShadow = "none";
+      btnType2.style.backgroundColor = "#bdbdbd";
+      btnType2.style.boxShadow = "0 0 60px #747272";
       this.setState({ coin: "tltc" });
       this.props.chngWallCoin("tltc");
     }

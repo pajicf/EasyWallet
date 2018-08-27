@@ -17,7 +17,8 @@ export default class home extends Component {
     walletID: "",
     balance: 0,
     coin: "",
-    transactions: []
+    transactions: [],
+    serverPath: ""
   };
 
   componentDidMount() {
@@ -39,11 +40,12 @@ export default class home extends Component {
       this.setState({ walletID: sessionStorage.getItem("wallId") });
       this.setState({ coin: sessionStorage.getItem("coin") });
     }
+    this.setState({ serverPath: this.props.serverPath });
   }
 
   getAllTransactions() {
     Axios.get(
-      `http://localhost:8080/wallet/trans?id=${this.state.walletID}&coin=${
+      `${this.state.serverPath}/trans?id=${this.state.walletID}&coin=${
         this.state.coin
       }`
     ).then(res => {
@@ -68,11 +70,10 @@ export default class home extends Component {
   };
 
   getBitBalance = () => {
-    let dest = `http://localhost:8080/wallet?id=${this.state.walletID}&coin=${
+    let dest = `${this.state.serverPath}/?id=${this.state.walletID}&coin=${
       this.state.coin
     }`;
     Axios.get(dest).then(res => {
-      // console.dir(res);
       this.setState({ balance: res.data.balance });
     });
   };
@@ -81,18 +82,22 @@ export default class home extends Component {
     document.getElementById("sendDisplay").style.display = "none";
     document.getElementById("receiveDisplay").style.display = "none";
     document.getElementById("transactionsDisplay").style.display = "none";
-    document.getElementById("btn1").style.flexGrow = 1;
-    document.getElementById("btn2").style.flexGrow = 1;
-    document.getElementById("btn3").style.flexGrow = 1;
-    document.getElementById("btn1").style.backgroundColor = "#00adb5";
-    document.getElementById("btn2").style.backgroundColor = "#00adb5";
-    document.getElementById("btn3").style.backgroundColor = "#00adb5";
+    let btn1 = document.getElementById("btn1");
+    btn1.style.flexGrow = 1;
+    btn1.style.backgroundColor = "#00adb5";
+    let btn2 = document.getElementById("btn2");
+    btn2.style.flexGrow = 1;
+    btn2.style.backgroundColor = "#00adb5";
+    let btn3 = document.getElementById("btn3");
+    btn3.style.flexGrow = 1;
+    btn3.style.backgroundColor = "#00adb5";
   };
 
   showEl = (tagName, btNum) => {
     document.getElementById(`${tagName}`).style.display = "inline";
-    document.getElementById(`btn${btNum}`).style.flexGrow = 2;
-    document.getElementById(`btn${btNum}`).style.backgroundColor = "#222831";
+    let btnN = document.getElementById(`btn${btNum}`);
+    btnN.style.flexGrow = 2;
+    btnN.style.backgroundColor = "#222831";
   };
 
   handleClick = bt => {
@@ -168,16 +173,22 @@ export default class home extends Component {
               wallID={this.state.walletID}
               balance={this.state.balance}
               coin={this.state.coin}
+              serverPath={this.state.serverPath}
             />
           </div>
           <div id="receiveDisplay">
-            <Receive wallID={this.state.walletID} coin={this.state.coin} />
+            <Receive
+              wallID={this.state.walletID}
+              serverPath={this.state.serverPath}
+              coin={this.state.coin}
+            />
           </div>
           <div id="transactionsDisplay">
             <Transactions
               trans={this.state.transactions}
               wallID={this.state.walletID}
               coin={this.state.coin}
+              serverPath={this.state.serverPath}
             />
           </div>
         </div>

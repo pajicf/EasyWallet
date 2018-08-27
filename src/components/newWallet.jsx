@@ -4,14 +4,15 @@ import logo from "../images/logo.png";
 import loader from "../images/loader.gif";
 import ltc from "../images/litecoin.svg";
 import btc from "../images/btc.png";
-import "../css/newWallet.css";
+import "../css/NewWallet.css";
 
-export default class newWallet extends Component {
+export default class NewWallet extends Component {
   state = {
     wallet: {
       id: ""
     },
-    coin: ""
+    coin: "",
+    serverPath: ""
   };
 
   componentDidMount() {
@@ -20,11 +21,12 @@ export default class newWallet extends Component {
 
   componentWillMount() {
     this.setState({ coin: this.props.coin });
+    this.setState({ serverPath: this.props.serverPath });
   }
 
   generateNewWallet() {
     return new Promise((resolve, reject) => {
-      Axios.post("http://localhost:8080/wallet", { coin: this.state.coin })
+      Axios.post(`${this.state.serverPath}`, { coin: this.state.coin })
         .then(res => {
           document.getElementById("loader").style.display = "none";
           this.setState({ wallet: res.data });
