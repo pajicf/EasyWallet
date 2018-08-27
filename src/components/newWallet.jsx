@@ -4,7 +4,7 @@ import logo from "../images/logo.png";
 import loader from "../images/loader.gif";
 import ltc from "../images/litecoin.svg";
 import btc from "../images/btc.png";
-import "../css/NewWallet.css";
+import "../css/newWallet.css";
 
 export default class NewWallet extends Component {
   state = {
