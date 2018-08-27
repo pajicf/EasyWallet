@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { BrowserRouter, Route } from "react-router-dom";
 
 import LogIn from "./components/login";
-import NewWallet from "./components/newWallet";
+import NewWallet from "./components/NewWallet";
 import Home from "./components/home";
 
 class App extends Component {
