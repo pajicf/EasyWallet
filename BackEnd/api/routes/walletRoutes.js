@@ -22,12 +22,7 @@ router.use(function(req, res, next) {
 });
 
 router.get(`${walletPath}:id?:coin?`, (req, res) => {
-<<<<<<< HEAD
-  var walletId = req.query.id;
-  console.log(walletId);
-=======
   const walletId = req.query.id;
->>>>>>> c830c359fceac4bdea00599aca63838e7aa5f7ac
   bitgo
     .coin(`${req.query.coin}`)
     .wallets()
@@ -41,7 +36,6 @@ router.get(`${walletPath}:id?:coin?`, (req, res) => {
       res.json({ message: error });
     });
 });
-
 
 router.post(walletPath, (req, res) => {
   bitgo
@@ -60,7 +54,6 @@ router.post(walletPath, (req, res) => {
     });
 });
 
-
 router.get(`${walletPath}/trans:id?:coin?`, (req, res) => {
   var walletId = req.query.id;
   bitgo
@@ -74,7 +67,6 @@ router.get(`${walletPath}/trans:id?:coin?`, (req, res) => {
       });
     });
 });
-
 
 router.post(`${walletPath}/send`, (req, res) => {
   bitgo
@@ -100,7 +92,6 @@ router.post(`${walletPath}/send`, (req, res) => {
         });
     });
 });
-
 
 router.post(`${walletPath}/addr/:id`, (req, res) => {
   wallet.getAddress({ id: `${req.params.id}` }).then(function(address) {
