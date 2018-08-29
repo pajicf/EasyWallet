@@ -20,13 +20,6 @@ export default class logIn extends Component {
     this.setState({ serverPath: this.props.serverPath });
   }
 
-  componentDidMount() {
-    let btnType1 = document.getElementById("btnType1");
-    btnType1.style.backgroundColor = "#fd9200";
-    btnType1.style.boxShadow = "0 0 60px #faa02a";
-    btnType1.focus = true;
-  }
-
   handleChange = data => {
     this.setState({ id: data });
   };

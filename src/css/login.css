@@ -77,10 +77,11 @@
   color: white;
 }
 .bitCoinBtn {
-  background-color: rgba(0, 0, 0, 0);
+  background-color: #fd9200;
   border: none;
   transition: 0.25s;
   flex-grow: 1;
+  box-shadow: 0 0 60px #faa02a;
 }
 .bitCoinBtn:focus,
 .liteCoinBtn:focus {

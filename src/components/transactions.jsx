@@ -23,7 +23,7 @@ export default class Receive extends Component {
     const { transactions } = this.state;
     let element = transactions.map(data => {
       return (
-        <div key={data.id} className="transactionsBody">
+        <div key={data.id} id="tes" className="transactionsBody">
           <div style={{ width: "100%", display: "flex", flexWrap: "wrap" }}>
             <div className="receiverID">{data.outputs[0].address}</div>
             <p className="subText"> Receiver ID</p>
