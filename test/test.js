@@ -53,11 +53,10 @@ describe("Wallet Routes", () => {
   describe("Send Money", () => {
     it("Should send money", done => {
       let telo = {
-        coin: coin,
-        walletId: id,
-        amount: 0,
+        amount: 1,
         address: address,
-        walletPassphrase: process.env.PassPhrase
+        walletId: id,
+        coin: coin
       };
       chai
         .request(base_url)
