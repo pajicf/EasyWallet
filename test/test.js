@@ -38,6 +38,7 @@ describe("Wallet Routes", () => {
           done();
         });
     });
+    describe("Get transactions",()=>{
     it("Should get wallet transactions", done => {
       chai
         .request(base_url)
@@ -50,9 +51,10 @@ describe("Wallet Routes", () => {
         });
     });
   });
+});
   describe("Send Money", () => {
     it("Should send money", done => {
-      let telo = {
+      let bdy = {
         coin: coin,
         walletId: id,
         amount: 0,
@@ -62,7 +64,7 @@ describe("Wallet Routes", () => {
       chai
         .request(base_url)
         .post(`/send`)
-        .send(telo)
+        .send(bdy)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a("object");
