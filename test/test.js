@@ -37,5 +37,17 @@ describe("Wallet Routes", () => {
           done();
         });
     });
+    it("Should get wallet transactions", done => {
+        chai
+          .request(base_url)
+          .get(`/trans?id=${id}&coin=${coin}`)
+          .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.be.a("object");
+            res.body.should.have.property("coin").eql('tltc');
+            done();
+          });
+      });
+      
   });
 });
