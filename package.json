@@ -22,7 +22,7 @@
     "should": "^13.2.3"
   },
   "scripts": {
-    "test": "mocha --timeout 10000",
+    "backtest": "mocha ./test/test.js --timeout 30000",
     "start:front": "react-scripts start",
     "start:back": "nodemon ./BackEnd/server.js",
     "build": "react-scripts build",
