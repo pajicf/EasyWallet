@@ -1,13 +1,27 @@
 const chai = require("chai");
+const expect=require('chai').expect;
 require("dotenv").config();
+const bitgo=require('../BackEnd/api/authentication');
 const chaiHttp = require("chai-http");
 const should = chai.should();
 const id = process.env.ID;
 const coin = process.env.COIN;
 const base_url = "http://localhost:8080/wallet";
 const address = process.env.walletAddress;
-
 chai.use(chaiHttp);
+
+function getwallet()
+{
+    return bitgo.coin('tltc').wallets().get({ id: id });
+}
+
+describe("Is Bitgo up?", () => {
+  it("Should check if BitGO is up", async() => {
+    const wallet = await getwallet();
+    expect(wallet).to.exist;
+  });
+});
+
 describe("Wallet Routes", () => {
   describe("Make Wallet", () => {
     it("Should make a wallet", done => {
@@ -54,15 +68,8 @@ describe("Wallet Routes", () => {
 });
   describe("Send Money", () => {
     it("Should send money", done => {
-<<<<<<< HEAD
-      let bdy = {
-        coin: coin,
-        walletId: id,
-        amount: 0,
-=======
       let telo = {
         amount: 1,
->>>>>>> c326904ade8c58937bc52a77dd2d1139e27feb81
         address: address,
         walletId: id,
         coin: coin
@@ -70,7 +77,7 @@ describe("Wallet Routes", () => {
       chai
         .request(base_url)
         .post(`/send`)
-        .send(bdy)
+        .send(telo)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a("object");
