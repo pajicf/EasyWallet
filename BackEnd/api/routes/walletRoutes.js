@@ -38,8 +38,8 @@ router.get(`${walletPath}:id?:coin?`, (req, res) => {
 });
 
 router.post(walletPath, (req, res) => {
-  var lbl=req.body.label;
-  if(!lbl) lbl="My Test Wallet";
+  var lbl = req.body.label;
+  if (!lbl) lbl = "My Test Wallet";
   bitgo
     .coin(`${req.body.coin}`)
     .wallets()
