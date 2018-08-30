@@ -7,12 +7,24 @@ import { Link } from "react-router-dom";
 import "../css/login.css";
 import Axios from "axios";
 
+const LoginStatuses = {
+  LOG_IN: "log_in",
+  LOGGING_IN: "logging_in",
+  LOGGED_IN: "logged_in"
+};
+
+const CoinType = {
+  TBTC: "tbtc",
+  TLTC: "tltc"
+};
+
 export default class logIn extends Component {
   state = {
+    status: LoginStatuses.LOG_IN,
+    coin: CoinType.TBTC,
     wallet: {},
     id: "",
     redirect: false,
-    coin: "tbtc",
     serverPath: ""
   };
 
@@ -26,52 +38,68 @@ export default class logIn extends Component {
 
   btnLogIn = () => {
     this.props.chngWallId(this.state.id);
-    let btnLID = document.getElementById("btnLID");
-    btnLID.style.backgroundColor = "#BDBDBD";
-    btnLID.innerHTML = "Logging in";
+    this.setState({
+      status: LoginStatuses.LOGGING_IN
+    });
     this.checkIfWalletExists();
   };
 
   checkIfWalletExists = () => {
-    let btnLID = document.getElementById("btnLID");
     Axios.get(
       `${this.state.serverPath}?id=${this.state.id}&coin=${this.state.coin}`
     )
       .then(res => {
-        btnLID.style.backgroundColor = "#00adb5";
-        btnLID.innerHTML = "Log in";
-        this.setState({ redirect: true });
+        this.setState({
+          status: LoginStatuses.LOGGED_IN
+        });
       })
       .catch(error => {
-        btnLID.style.backgroundColor = "#00adb5";
-        btnLID.innerHTML = "Log in";
+        this.setState({
+          status: LoginStatuses.LOG_IN
+        });
         alert("WRONG WALLET ID");
       });
   };
 
   handleType(but) {
-    let btnType1 = document.getElementById("btnType1");
-    let btnType2 = document.getElementById("btnType2");
     if (but === 1) {
-      btnType2.style.backgroundColor = "rgba(0,0,0,0)";
-      btnType2.style.boxShadow = "none";
-      btnType1.style.backgroundColor = "#fd9200";
-      btnType1.style.boxShadow = "0 0 60px #faa02a";
       this.setState({ coin: "tbtc" });
       this.props.chngWallCoin("tbtc");
     } else {
-      btnType1.style.backgroundColor = "rgba(0,0,0,0)";
-      btnType1.style.boxShadow = "none";
-      btnType2.style.backgroundColor = "#bdbdbd";
-      btnType2.style.boxShadow = "0 0 60px #747272";
       this.setState({ coin: "tltc" });
       this.props.chngWallCoin("tltc");
     }
   }
 
   render() {
-    if (this.state.redirect) {
+    const { status } = this.state;
+    const { coin } = this.state;
+
+    if (status === LoginStatuses.LOGGED_IN) {
       return <Redirect push to="/home" />;
+    }
+
+    let loginButtonText = "Log in";
+
+    if (status === LoginStatuses.LOGGING_IN) {
+      loginButtonText = "Logging in";
+    }
+
+    let bitCoinButton = {
+      backgroundColor: "#fd9200",
+      boxShadow: "0 0 60px #faa02a"
+    };
+    let liteCoinButton = {
+      backgroundColor: "rgba(0,0,0,0)",
+      boxShadow: "none"
+    };
+
+    if (coin === CoinType.TLTC) {
+      bitCoinButton = { backgroundColor: "rgba(0,0,0,0)", boxShadow: "none" };
+      liteCoinButton = {
+        backgroundColor: "#bdbdbd",
+        boxShadow: "0 0 60px #747272"
+      };
     }
 
     return (
@@ -86,6 +114,7 @@ export default class logIn extends Component {
           <button
             id="btnType1"
             className="bitCoinBtn"
+            style={bitCoinButton}
             onClick={() => this.handleType(1)}
           >
             <img alt="img1" width="128px" height="128px" src={btc} />
@@ -93,6 +122,7 @@ export default class logIn extends Component {
           <button
             id="btnType2"
             className="liteCoinBtn"
+            style={liteCoinButton}
             onClick={() => this.handleType(2)}
           >
             <img alt="img2" width="128px" height="128px" src={ltc} />
@@ -110,10 +140,11 @@ export default class logIn extends Component {
             <button
               id="btnLID"
               onClick={this.btnLogIn}
+              disabled={status === LoginStatuses.LOGGING_IN}
               style={{ backgroundColor: "#00adb5" }}
               className="btnL"
             >
-              Log in
+              {loginButtonText}
             </button>
 
             <Link to="/new">
