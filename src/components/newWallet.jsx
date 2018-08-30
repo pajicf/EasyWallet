@@ -6,13 +6,19 @@ import ltc from "../images/litecoin.svg";
 import btc from "../images/btc.png";
 import "../css/newWallet.css";
 
+const Loader = {
+  LOADING: "V1",
+  LOADED: "V2"
+};
+
 export default class NewWallet extends Component {
   state = {
     wallet: {
       id: ""
     },
     coin: "",
-    serverPath: ""
+    serverPath: "",
+    status: Loader.LOADING
   };
 
   componentDidMount() {
@@ -28,19 +34,20 @@ export default class NewWallet extends Component {
     return new Promise((resolve, reject) => {
       Axios.post(`${this.state.serverPath}`, { coin: this.state.coin })
         .then(res => {
-          document.getElementById("loader").style.display = "none";
+          this.setState({ status: Loader.LOADED });
           this.setState({ wallet: res.data });
         })
         .catch(error => {
           this.setState({
             wallet: { id: "Error has occured! Try later." }
           });
-          document.getElementById("warning").style.display = "none";
         });
     });
   }
 
   render() {
+    const { status } = this.state;
+
     return (
       <div className="App">
         <header className="App-header">
@@ -89,6 +96,9 @@ export default class NewWallet extends Component {
                 src={loader}
                 width="40px"
                 height="40px"
+                style={{
+                  display: status === Loader.LOADED ? "none" : "inline"
+                }}
               />
             </div>
           </div>
