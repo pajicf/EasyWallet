@@ -1,33 +1,35 @@
-const chai = require("chai");
-const expect=require('chai').expect;
 require("dotenv").config();
-const bitgo=require('../BackEnd/api/authentication');
-const chaiHttp = require("chai-http");
-const should = chai.should();
+const bitgo = require("../BackEnd/api/authentication");
 const id = process.env.ID;
 const coin = process.env.COIN;
 const base_url = "http://localhost:8080/wallet";
-const address = process.env.walletAddress;
-chai.use(chaiHttp);
+const chai = require("chai");
+const expect = require("chai").expect;
+const chaiHttp = require("chai-http");
+const should = chai.should();
 
-function getwallet()
-{
-    return bitgo.coin('tltc').wallets().get({ id: id });
+function getwallet() {
+  return bitgo
+    .coin("tltc")
+    .wallets()
+    .get({ id: id });
 }
 
+chai.use(chaiHttp);
+
 describe("Is Bitgo up?", () => {
-  it("Should check if BitGO is up", async() => {
+  it("Should check if BitGO is up", async () => {
     const wallet = await getwallet();
     expect(wallet).to.exist;
   });
 });
 
-describe("Wallet Routes", () => {
+describe("Testing BitGo Functions", () => {
   describe("Make Wallet", () => {
     it("Should make a wallet", done => {
       let telo = {
         coin: coin,
-        label: "npm run test"
+        label: "Dont put money in me, im fragile"
       };
       chai
         .request(base_url)
@@ -52,7 +54,6 @@ describe("Wallet Routes", () => {
           done();
         });
     });
-    describe("Get transactions",()=>{
     it("Should get wallet transactions", done => {
       chai
         .request(base_url)
@@ -65,12 +66,11 @@ describe("Wallet Routes", () => {
         });
     });
   });
-});
   describe("Send Money", () => {
     it("Should send money", done => {
       let telo = {
-        amount: 1,
-        address: address,
+        amount: 100000,
+        address: process.env.walletAddress,
         walletId: id,
         coin: coin
       };
@@ -80,6 +80,7 @@ describe("Wallet Routes", () => {
         .send(telo)
         .end((err, res) => {
           res.should.have.status(200);
+          res.should.be.json;
           res.body.should.be.a("object");
           done();
         });

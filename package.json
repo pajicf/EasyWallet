@@ -27,7 +27,7 @@
   },
   "scripts": {
     "fronttest": "react-scripts test --env=jsdom",
-    "backtest": "mocha ./test/test.js --timeout 30000",
+    "backtest": "mocha ./test/test.js --timeout 300000",
     "start:front": "react-scripts start",
     "start:back": "nodemon ./BackEnd/server.js",
     "build": "react-scripts build",
