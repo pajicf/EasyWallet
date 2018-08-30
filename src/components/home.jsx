@@ -11,6 +11,12 @@ import Send from "./send";
 import Transactions from "./transactions";
 import { Redirect } from "react-router-dom";
 
+const OpenedTab = {
+  TAB1: 1,
+  TAB2: 2,
+  TAB3: 3
+};
+
 export default class home extends Component {
   state = {
     btInUSD: 0,
@@ -19,7 +25,8 @@ export default class home extends Component {
     coin: "",
     transactions: [],
     serverPath: "",
-    logout: false
+    logout: false,
+    tab: 1
   };
 
   componentDidMount() {
@@ -27,7 +34,6 @@ export default class home extends Component {
     sessionStorage.setItem("coin", this.state.coin);
     this.getBitInUSD();
     this.interval1 = setInterval(this.getBitInUSD, 300000);
-    this.hideEl();
     this.getBitBalance();
     this.interval2 = setInterval(this.getBitBalance, 30000);
     this.getAllTransactions();
@@ -86,42 +92,9 @@ export default class home extends Component {
     });
   };
 
-  hideEl = () => {
-    document.getElementById("sendDisplay").style.display = "none";
-    document.getElementById("receiveDisplay").style.display = "none";
-    document.getElementById("transactionsDisplay").style.display = "none";
-    let btn1 = document.getElementById("btn1");
-    btn1.style.flexGrow = 1;
-    btn1.style.backgroundColor = "#00adb5";
-    let btn2 = document.getElementById("btn2");
-    btn2.style.flexGrow = 1;
-    btn2.style.backgroundColor = "#00adb5";
-    let btn3 = document.getElementById("btn3");
-    btn3.style.flexGrow = 1;
-    btn3.style.backgroundColor = "#00adb5";
-  };
-
-  showEl = (tagName, btNum) => {
-    document.getElementById(`${tagName}`).style.display = "inline";
-    let btnN = document.getElementById(`btn${btNum}`);
-    btnN.style.flexGrow = 2;
-    btnN.style.backgroundColor = "#222831";
-  };
-
   handleClick = bt => {
-    if (bt === 1) {
-      this.hideEl();
-      this.showEl("sendDisplay", 1);
-    }
-    if (bt === 2) {
-      this.hideEl();
-      this.showEl("receiveDisplay", 2);
-    }
-    if (bt === 3) {
-      this.hideEl();
-      this.showEl("transactionsDisplay", 3);
-      this.getAllTransactions();
-    }
+    this.setState({ tab: bt });
+    this.getAllTransactions();
   };
 
   handleLogOut = () => {
@@ -133,6 +106,53 @@ export default class home extends Component {
   };
 
   render() {
+    const { tab } = this.state;
+
+    let tabButton = {
+      flexGrow: 1,
+      backgroundColor: "#00adb5"
+    };
+
+    let tabComponent = {
+      display: "none"
+    };
+
+    let tabButton1 = tabButton,
+      tabButton2 = tabButton,
+      tabButton3 = tabButton;
+
+    let tabComponent1 = tabComponent,
+      tabComponent2 = tabComponent,
+      tabComponent3 = tabComponent;
+
+    if (tab === OpenedTab.TAB1) {
+      tabComponent1 = {
+        display: "inline"
+      };
+      tabButton1 = {
+        flexGrow: 2,
+        backgroundColor: "#222831"
+      };
+    }
+    if (tab === OpenedTab.TAB2) {
+      tabComponent2 = {
+        display: "inline"
+      };
+      tabButton2 = {
+        flexGrow: 2,
+        backgroundColor: "#222831"
+      };
+    }
+    if (tab === OpenedTab.TAB3) {
+      tabComponent3 = {
+        display: "inline"
+      };
+      tabButton3 = {
+        flexGrow: 2,
+        backgroundColor: "#222831"
+      };
+    }
+
     if (this.state.logout) {
       return <Redirect to="/" />;
     }
@@ -181,17 +201,17 @@ export default class home extends Component {
 
         <div className="featuresContainer">
           <div className="buttonBox">
-            <button id="btn1" onClick={() => this.handleClick(1)}>
+            <button style={tabButton1} onClick={() => this.handleClick(1)}>
               Send
             </button>
-            <button id="btn2" onClick={() => this.handleClick(2)}>
+            <button style={tabButton2} onClick={() => this.handleClick(2)}>
               Receive
             </button>
-            <button id="btn3" onClick={() => this.handleClick(3)}>
+            <button style={tabButton3} onClick={() => this.handleClick(3)}>
               Transactions
             </button>
           </div>
-          <div id="sendDisplay">
+          <div style={tabComponent1} className="tabs">
             <Send
               wallID={this.state.walletID}
               balance={this.state.balance}
@@ -199,14 +219,14 @@ export default class home extends Component {
               serverPath={this.state.serverPath}
             />
           </div>
-          <div id="receiveDisplay">
+          <div style={tabComponent2} className="tabs">
             <Receive
               wallID={this.state.walletID}
               serverPath={this.state.serverPath}
               coin={this.state.coin}
             />
           </div>
-          <div id="transactionsDisplay">
+          <div style={tabComponent3} className="tabs">
             <Transactions
               trans={this.state.transactions}
               wallID={this.state.walletID}
