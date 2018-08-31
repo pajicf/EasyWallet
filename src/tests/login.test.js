@@ -20,5 +20,13 @@ describe("Log in test", () => {
     expect(logInScreen.find("#btnLID").text()).toEqual("Logging in");
   });
 
-  test("If currency button changes props", () => {});
+  test("If currency button changes props", () => {
+    logInScreen.find("#btnType1").simulate("click");
+
+    expect(logInScreen.state("coin")).toEqual("tbtc");
+
+    logInScreen.find("#btnType2").simulate("click");
+
+    expect(logInScreen.state("coin")).toEqual("tltc");
+  });
 });
