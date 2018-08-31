@@ -4,12 +4,14 @@ import "../css/transactions.css";
 export default class Receive extends Component {
   state = {
     transactions: [],
-    walletId: ""
+    walletId: "",
+    serverPath: ""
   };
 
   componentWillMount() {
     this.setState({ transactions: this.props.trans });
     this.setState({ walletId: this.props.wallID });
+    this.setState({ serverPath: this.props.serverPath });
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -21,7 +23,7 @@ export default class Receive extends Component {
     const { transactions } = this.state;
     let element = transactions.map(data => {
       return (
-        <div key={data.id} className="transactionsBody">
+        <div key={data.id} id="tes" className="transactionsBody">
           <div style={{ width: "100%", display: "flex", flexWrap: "wrap" }}>
             <div className="receiverID">{data.outputs[0].address}</div>
             <p className="subText"> Receiver ID</p>

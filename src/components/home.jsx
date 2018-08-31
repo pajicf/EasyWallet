@@ -9,7 +9,13 @@ import Axios from "axios";
 import Receive from "./receive";
 import Send from "./send";
 import Transactions from "./transactions";
-import { Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
+
+const OpenedTab = {
+  TAB1: 1,
+  TAB2: 2,
+  TAB3: 3
+};
 
 export default class home extends Component {
   state = {
@@ -17,17 +23,19 @@ export default class home extends Component {
     walletID: "",
     balance: 0,
     coin: "",
-    transactions: []
+    transactions: [],
+    serverPath: "",
+    logout: false,
+    tab: 1
   };
 
   componentDidMount() {
     sessionStorage.setItem("wallId", this.state.walletID);
     sessionStorage.setItem("coin", this.state.coin);
     this.getBitInUSD();
-    this.interval = setInterval(this.getBitInUSD, 300000);
-    this.hideEl();
+    this.interval1 = setInterval(this.getBitInUSD, 300000);
     this.getBitBalance();
-    this.interval = setInterval(this.getBitBalance, 30000);
+    this.interval2 = setInterval(this.getBitBalance, 30000);
     this.getAllTransactions();
   }
 
@@ -39,11 +47,17 @@ export default class home extends Component {
       this.setState({ walletID: sessionStorage.getItem("wallId") });
       this.setState({ coin: sessionStorage.getItem("coin") });
     }
+    this.setState({ serverPath: this.props.serverPath });
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval1);
+    clearInterval(this.interval2);
   }
 
   getAllTransactions() {
     Axios.get(
-      `http://localhost:8080/wallet/trans?id=${this.state.walletID}&coin=${
+      `${this.state.serverPath}/trans?id=${this.state.walletID}&coin=${
         this.state.coin
       }`
     ).then(res => {
@@ -52,6 +66,7 @@ export default class home extends Component {
   }
 
   getBitInUSD = () => {
+    console.log("usd");
     if (this.state.coin === "tbtc") {
       Axios.get("https://blockchain.info/tobtc?currency=USD&value=1").then(
         res => {
@@ -68,50 +83,79 @@ export default class home extends Component {
   };
 
   getBitBalance = () => {
-    let dest = `http://localhost:8080/wallet?id=${this.state.walletID}&coin=${
+    console.log("bal");
+    let dest = `${this.state.serverPath}/?id=${this.state.walletID}&coin=${
       this.state.coin
     }`;
     Axios.get(dest).then(res => {
-      // console.dir(res);
       this.setState({ balance: res.data.balance });
     });
   };
 
-  hideEl = () => {
-    document.getElementById("sendDisplay").style.display = "none";
-    document.getElementById("receiveDisplay").style.display = "none";
-    document.getElementById("transactionsDisplay").style.display = "none";
-    document.getElementById("btn1").style.flexGrow = 1;
-    document.getElementById("btn2").style.flexGrow = 1;
-    document.getElementById("btn3").style.flexGrow = 1;
-    document.getElementById("btn1").style.backgroundColor = "#00adb5";
-    document.getElementById("btn2").style.backgroundColor = "#00adb5";
-    document.getElementById("btn3").style.backgroundColor = "#00adb5";
-  };
-
-  showEl = (tagName, btNum) => {
-    document.getElementById(`${tagName}`).style.display = "inline";
-    document.getElementById(`btn${btNum}`).style.flexGrow = 2;
-    document.getElementById(`btn${btNum}`).style.backgroundColor = "#222831";
-  };
-
   handleClick = bt => {
-    if (bt === 1) {
-      this.hideEl();
-      this.showEl("sendDisplay", 1);
-    }
-    if (bt === 2) {
-      this.hideEl();
-      this.showEl("receiveDisplay", 2);
-    }
-    if (bt === 3) {
-      this.hideEl();
-      this.showEl("transactionsDisplay", 3);
-      this.getAllTransactions();
-    }
+    this.setState({ tab: bt });
+    this.getAllTransactions();
+  };
+
+  handleLogOut = () => {
+    sessionStorage.setItem("wallId", "");
+    sessionStorage.setItem("coin", "");
+    this.props.chngWallCoin("tbtc");
+    this.props.chngWallId("");
+    this.setState({ logout: true });
   };
 
   render() {
+    const { tab } = this.state;
+
+    let tabButton = {
+      flexGrow: 1,
+      backgroundColor: "#00adb5"
+    };
+
+    let tabComponent = {
+      display: "none"
+    };
+
+    let tabButton1 = tabButton,
+      tabButton2 = tabButton,
+      tabButton3 = tabButton;
+
+    let tabComponent1 = tabComponent,
+      tabComponent2 = tabComponent,
+      tabComponent3 = tabComponent;
+
+    if (tab === OpenedTab.TAB1) {
+      tabComponent1 = {
+        display: "inline"
+      };
+      tabButton1 = {
+        flexGrow: 2,
+        backgroundColor: "#222831"
+      };
+    }
+    if (tab === OpenedTab.TAB2) {
+      tabComponent2 = {
+        display: "inline"
+      };
+      tabButton2 = {
+        flexGrow: 2,
+        backgroundColor: "#222831"
+      };
+    }
+    if (tab === OpenedTab.TAB3) {
+      tabComponent3 = {
+        display: "inline"
+      };
+      tabButton3 = {
+        flexGrow: 2,
+        backgroundColor: "#222831"
+      };
+    }
+
+    if (this.state.logout) {
+      return <Redirect to="/" />;
+    }
     return (
       <div className="App">
         <header className="home-header">
@@ -145,39 +189,49 @@ export default class home extends Component {
             </p>
           </div>
           <div className="logOut">
-            <Link to="/">
-              <img alt="Log out" width="64px" height="64px" src={logout} />
-            </Link>
+            <img
+              alt="Log out"
+              width="64px"
+              height="64px"
+              src={logout}
+              onClick={this.handleLogOut}
+            />
           </div>
         </header>
 
         <div className="featuresContainer">
           <div className="buttonBox">
-            <button id="btn1" onClick={() => this.handleClick(1)}>
+            <button style={tabButton1} onClick={() => this.handleClick(1)}>
               Send
             </button>
-            <button id="btn2" onClick={() => this.handleClick(2)}>
+            <button style={tabButton2} onClick={() => this.handleClick(2)}>
               Receive
             </button>
-            <button id="btn3" onClick={() => this.handleClick(3)}>
+            <button style={tabButton3} onClick={() => this.handleClick(3)}>
               Transactions
             </button>
           </div>
-          <div id="sendDisplay">
+          <div style={tabComponent1} className="tabs">
             <Send
               wallID={this.state.walletID}
               balance={this.state.balance}
               coin={this.state.coin}
+              serverPath={this.state.serverPath}
             />
           </div>
-          <div id="receiveDisplay">
-            <Receive wallID={this.state.walletID} coin={this.state.coin} />
+          <div style={tabComponent2} className="tabs">
+            <Receive
+              wallID={this.state.walletID}
+              serverPath={this.state.serverPath}
+              coin={this.state.coin}
+            />
           </div>
-          <div id="transactionsDisplay">
+          <div style={tabComponent3} className="tabs">
             <Transactions
               trans={this.state.transactions}
               wallID={this.state.walletID}
               coin={this.state.coin}
+              serverPath={this.state.serverPath}
             />
           </div>
         </div>

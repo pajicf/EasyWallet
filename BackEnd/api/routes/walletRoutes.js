@@ -28,6 +28,7 @@ router.get(`${walletPath}:id?:coin?`, (req, res) => {
     .wallets()
     .get({ id: walletId })
     .then(function(wallet) {
+      res.status(200);
       res.json(wallet._wallet);
     })
     .catch(error => {
@@ -35,12 +36,15 @@ router.get(`${walletPath}:id?:coin?`, (req, res) => {
       res.json({ message: error });
     });
 });
+
 router.post(walletPath, (req, res) => {
+  var lbl = req.body.label;
+  if (!lbl) lbl = "My Test Wallet";
   bitgo
     .coin(`${req.body.coin}`)
     .wallets()
     .generateWallet({
-      label: "My Test Wallet",
+      label: lbl,
       passphrase: process.env.PassPhrase
     })
     .then(function(wallet) {

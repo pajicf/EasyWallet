@@ -6,5 +6,4 @@ var bitgo=require("./api/authentication");
 app.use("/", router);
 //app.use(bitgo);
 
-
 app.listen(8080, () => console.log("Server listening on port 8080!"));
