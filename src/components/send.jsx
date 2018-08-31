@@ -13,7 +13,7 @@ export default class send extends Component {
     btInUSD: 0,
     coin: "",
     serverPath: "",
-    value: 0,
+    value: "",
     send: Send.SEND,
     receiver: ""
   };
@@ -46,7 +46,7 @@ export default class send extends Component {
           this.setState({ send: Send.SEND });
           console.dir(res);
           if (res.data.error === "err") {
-            this.handleSendChange();
+            this.endSend();
             alert("Invalid address!");
           } else {
             this.endSend();
@@ -63,9 +63,10 @@ export default class send extends Component {
   };
 
   endSend() {
-    this.setState({ ammInBTC: null });
-    this.setState({ receiver: null });
-    this.setState({ value: null });
+    console.log("I was summoned!");
+    this.setState({ ammInBTC: "" });
+    this.setState({ receiver: "" });
+    this.setState({ value: "" });
   }
 
   handleKeyDown = e => {
@@ -119,6 +120,7 @@ export default class send extends Component {
             type="text"
             disabled={send === Send.SENDING}
             onChange={e => this.setState({ receiver: e.target.value })}
+            value={this.state.receiver}
           />
           <input
             id="inputAmountID"
@@ -129,6 +131,7 @@ export default class send extends Component {
             onKeyDown={this.handleKeyDown}
             onChange={e => this.handleChange(e.target.value)}
             disabled={send === Send.SENDING}
+            value={this.state.value}
           />
           <p className="satoshis">
             Amount in {this.state.coin === "tbtc" ? "BTC" : "LTC"}:{" "}
