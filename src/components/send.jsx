@@ -2,13 +2,20 @@ import React, { Component } from "react";
 import "../css/send.css";
 import Axios from "axios";
 
+const Send = {
+  SEND: "Send",
+  SENDING: "Sending"
+};
 export default class send extends Component {
   state = {
     walletID: "",
     ammInBTC: 0,
     btInUSD: 0,
     coin: "",
-    serverPath: ""
+    serverPath: "",
+    value: 0,
+    send: Send.SEND,
+    receiver: ""
   };
 
   componentWillMount() {
@@ -18,20 +25,17 @@ export default class send extends Component {
   }
 
   sendCash = () => {
-    let amUSD = document.getElementById("inputAmountID").value;
+    let amUSD = this.state.value;
     let amBTC = amUSD / this.state.btInUSD;
     let amSmlUnit = amBTC * 1e8;
-    let rec = document.getElementById("receiver").value;
+    let rec = this.state.receiver.trim();
+    console.log(rec);
     console.log(amSmlUnit + " " + this.props.balance);
     if (amSmlUnit <= 0 || rec === "" || amSmlUnit >= this.props.balance) {
       alert("Addres or amount is not valid");
     } else {
-      document.getElementById("inputAmountID").disabled = true;
-      document.getElementById("receiver").disabled = true;
-      document.getElementById("sendButton").disabled = true;
-      let sb = document.getElementById("sendButton");
-      sb.innerHTML = "Sending";
-      sb.style.backgroundColor = "#BDBDBD";
+      this.setState({ send: Send.SENDING });
+
       Axios.post(`${this.state.serverPath}/send`, {
         amount: Math.round(amSmlUnit),
         address: rec,
@@ -39,17 +43,18 @@ export default class send extends Component {
         coin: this.state.coin
       })
         .then(res => {
+          this.setState({ send: Send.SEND });
           console.dir(res);
           if (res.data.error === "err") {
             this.handleSendChange();
             alert("Invalid address!");
           } else {
-            this.handleSendChange();
+            this.endSend();
             alert("Your transaction has been submitted and is now pending!");
           }
         })
         .catch(error => {
-          this.handleSendChange();
+          this.endSend();
           alert(
             "Error while submitting transaction! Please check your internet connection, your funds and try again later!"
           );
@@ -57,35 +62,27 @@ export default class send extends Component {
     }
   };
 
-  handleSendChange() {
-    let sb = document.getElementById("sendButton");
-    sb.style.backgroundColor = "#393e46";
-    sb.disabled = false;
-    sb.innerHTML = "Send";
-    let rec = document.getElementById("receiver");
-    rec.disabled = false;
-    rec.value = null;
-    let iaID = document.getElementById("inputAmountID");
-    iaID.value = null;
-    iaID.disabled = false;
-    this.setState({ ammInBTC: 0 });
+  endSend() {
+    this.setState({ ammInBTC: null });
+    this.setState({ receiver: null });
+    this.setState({ value: null });
   }
 
-  handleChange = () => {
-    document.getElementById("inputAmountID").onkeydown = function(e) {
-      if (
-        !(
-          (e.keyCode > 95 && e.keyCode < 106) ||
-          (e.keyCode > 47 && e.keyCode < 58) ||
-          e.keyCode === 8
-        )
-      ) {
-        return false;
-      }
-    };
-    let conv =
-      document.getElementById("inputAmountID").value / this.state.btInUSD;
+  handleKeyDown = e => {
+    if (
+      !(
+        (e.keyCode > 95 && e.keyCode < 106) ||
+        (e.keyCode > 47 && e.keyCode < 58) ||
+        e.keyCode === 8
+      )
+    ) {
+      e.preventDefault();
+    }
+  };
 
+  handleChange = e => {
+    this.setState({ value: e });
+    let conv = e / this.state.btInUSD;
     this.setState({ ammInBTC: conv.toFixed(8) });
   };
 
@@ -111,6 +108,7 @@ export default class send extends Component {
   };
 
   render() {
+    const { send } = this.state;
     return (
       <div className="sendBody">
         <div className="inputs">
@@ -119,6 +117,8 @@ export default class send extends Component {
             className="inputSendID"
             placeholder="Address of reciever"
             type="text"
+            disabled={send === Send.SENDING}
+            onChange={e => this.setState({ receiver: e.target.value })}
           />
           <input
             id="inputAmountID"
@@ -126,7 +126,9 @@ export default class send extends Component {
             placeholder="$"
             type="number"
             min="0"
-            onChange={() => this.handleChange()}
+            onKeyDown={this.handleKeyDown}
+            onChange={e => this.handleChange(e.target.value)}
+            disabled={send === Send.SENDING}
           />
           <p className="satoshis">
             Amount in {this.state.coin === "tbtc" ? "BTC" : "LTC"}:{" "}
@@ -137,8 +139,9 @@ export default class send extends Component {
               id="sendButton"
               onClick={() => this.sendCash()}
               className="btnSend"
+              disabled={send === Send.SENDING}
             >
-              Send
+              {send}
             </button>
           </div>
         </div>
