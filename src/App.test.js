@@ -12,17 +12,3 @@ it("renders without crashing", () => {
   ReactDOM.render(<App />, div);
   ReactDOM.unmountComponentAtNode(div);
 });
-
-test("If log in button changes text when pressed", () => {
-  let props = {
-    chngWallId: jest.fn(),
-    chngWallCoin: jest.fn()
-  };
-  let logInScreen = shallow(<Login {...props} />);
-
-  expect(logInScreen.find("#btnLID").text()).toEqual("Log in");
-
-  logInScreen.find("#btnLID").simulate("click");
-
-  expect(logInScreen.find("#btnLID").text()).toEqual("Logging in");
-});
