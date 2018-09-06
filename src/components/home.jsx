@@ -17,7 +17,7 @@ const OpenedTab = {
   TAB3: 3
 };
 
-export default class home extends Component {
+export default class Home extends Component {
   state = {
     btInUSD: 0,
     walletID: "",
@@ -94,7 +94,9 @@ export default class home extends Component {
 
   handleClick = bt => {
     this.setState({ tab: bt });
-    this.getAllTransactions();
+    if (bt === 3) {
+      this.getAllTransactions();
+    }
   };
 
   handleLogOut = () => {

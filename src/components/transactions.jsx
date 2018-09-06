@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "../css/transactions.css";
 
-export default class Receive extends Component {
+export default class Transactions extends Component {
   state = {
     transactions: [],
     walletId: "",

@@ -6,7 +6,7 @@ const Send = {
   SEND: "Send",
   SENDING: "Sending"
 };
-export default class send extends Component {
+export default class SendClass extends Component {
   state = {
     walletID: "",
     ammInBTC: 0,
@@ -22,6 +22,10 @@ export default class send extends Component {
     this.setState({ walletID: this.props.wallID });
     this.setState({ coin: this.props.coin });
     this.setState({ serverPath: this.props.serverPath });
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
 
   sendCash = () => {
@@ -89,7 +93,7 @@ export default class send extends Component {
 
   componentDidMount() {
     this.getBitInUSD();
-    setInterval(this.getBitInUSD, 30000);
+    this.interval = setInterval(this.getBitInUSD, 30000);
   }
 
   getBitInUSD = () => {

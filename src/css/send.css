@@ -51,6 +51,10 @@
   outline: none;
   transition: 1s;
 }
+.btnSend:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
 .btnSend:hover {
   border-bottom: 4px solid black;
 }

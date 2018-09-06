@@ -18,7 +18,7 @@ const CoinType = {
   TLTC: "tltc"
 };
 
-export default class logIn extends Component {
+export default class LogIn extends Component {
   state = {
     status: LoginStatuses.LOG_IN,
     coin: CoinType.TBTC,
@@ -86,7 +86,7 @@ export default class logIn extends Component {
     }
 
     let bitCoinButton = {
-      backgroundColor: "#fd9200",
+      backgroundColor: "#f7931a",
       boxShadow: "0 0 60px #faa02a"
     };
     let liteCoinButton = {
