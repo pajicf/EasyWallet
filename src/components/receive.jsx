@@ -4,30 +4,12 @@ import Axios from "axios";
 
 export default class Receive extends Component {
   state = {
-    walletID: "",
-    recAddress: "",
-    coin: "",
-    serverPath: ""
+    recAddress: ""
   };
 
   componentWillMount() {
-    this.setState({ walletID: this.props.wallID });
-    this.setState({ coin: this.props.coin });
-    this.setState({ serverPath: this.props.serverPath });
+    this.setState({ recAddress: this.props.address });
   }
-  componentDidMount() {
-    this.getAdd();
-  }
-
-  getAdd = () => {
-    Axios.get(
-      `${this.state.serverPath}?id=${this.state.walletID}&coin=${
-        this.state.coin
-      }`
-    ).then(res => {
-      this.setState({ recAddress: res.data.receiveAddress.address });
-    });
-  };
 
   render() {
     return (

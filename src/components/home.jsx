@@ -26,7 +26,8 @@ export default class Home extends Component {
     transactions: [],
     serverPath: "",
     logout: false,
-    tab: 1
+    tab: 1,
+    recAddress: ""
   };
 
   componentDidMount() {
@@ -37,6 +38,7 @@ export default class Home extends Component {
     this.getBitBalance();
     this.interval2 = setInterval(this.getBitBalance, 30000);
     this.getAllTransactions();
+    this.getAdd();
   }
 
   componentWillMount() {
@@ -82,6 +84,16 @@ export default class Home extends Component {
     }
   };
 
+  getAdd = () => {
+    Axios.get(
+      `${this.state.serverPath}?id=${this.state.walletID}&coin=${
+        this.state.coin
+      }`
+    ).then(res => {
+      this.setState({ recAddress: res.data.receiveAddress.address });
+    });
+  };
+
   getBitBalance = () => {
     console.log("bal");
     let dest = `${this.state.serverPath}/?id=${this.state.walletID}&coin=${
@@ -115,40 +127,23 @@ export default class Home extends Component {
       backgroundColor: "#00adb5"
     };
 
-    let tabComponent = {
-      display: "none"
-    };
-
     let tabButton1 = tabButton,
       tabButton2 = tabButton,
       tabButton3 = tabButton;
 
-    let tabComponent1 = tabComponent,
-      tabComponent2 = tabComponent,
-      tabComponent3 = tabComponent;
-
     if (tab === OpenedTab.TAB1) {
-      tabComponent1 = {
-        display: "inline"
-      };
       tabButton1 = {
         flexGrow: 2,
         backgroundColor: "#222831"
       };
     }
     if (tab === OpenedTab.TAB2) {
-      tabComponent2 = {
-        display: "inline"
-      };
       tabButton2 = {
         flexGrow: 2,
         backgroundColor: "#222831"
       };
     }
     if (tab === OpenedTab.TAB3) {
-      tabComponent3 = {
-        display: "inline"
-      };
       tabButton3 = {
         flexGrow: 2,
         backgroundColor: "#222831"
@@ -213,28 +208,24 @@ export default class Home extends Component {
               Transactions
             </button>
           </div>
-          <div style={tabComponent1} className="tabs">
-            <Send
-              wallID={this.state.walletID}
-              balance={this.state.balance}
-              coin={this.state.coin}
-              serverPath={this.state.serverPath}
-            />
-          </div>
-          <div style={tabComponent2} className="tabs">
-            <Receive
-              wallID={this.state.walletID}
-              serverPath={this.state.serverPath}
-              coin={this.state.coin}
-            />
-          </div>
-          <div style={tabComponent3} className="tabs">
-            <Transactions
-              trans={this.state.transactions}
-              wallID={this.state.walletID}
-              coin={this.state.coin}
-              serverPath={this.state.serverPath}
-            />
+          <div className="tabs">
+            {tab === OpenedTab.TAB1 ? (
+              <Send
+                wallID={this.state.walletID}
+                balance={this.state.balance}
+                coin={this.state.coin}
+                serverPath={this.state.serverPath}
+              />
+            ) : tab === OpenedTab.TAB2 ? (
+              <Receive address={this.state.recAddress} />
+            ) : (
+              <Transactions
+                trans={this.state.transactions}
+                wallID={this.state.walletID}
+                coin={this.state.coin}
+                serverPath={this.state.serverPath}
+              />
+            )}
           </div>
         </div>
       </div>
