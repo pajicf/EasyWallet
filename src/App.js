@@ -11,7 +11,7 @@ class App extends Component {
     this.state = {
       wallId: "",
       coin: "tbtc",
-      serverPath: "http://localhost:8080/wallet"
+      serverPath: "localhost:8080/wallet"
     };
     this.changeWallId = this.changeWallId.bind(this);
     this.changeWallCoin = this.changeWallCoin.bind(this);

@@ -106,6 +106,7 @@ export default class SendClass extends Component {
       );
     } else if (this.state.coin === "tltc") {
       Axios.get("https://api.cryptonator.com/api/ticker/ltc-usd").then(res => {
+        console.log(res);
         let a = res.data.ticker.price;
         this.setState({ btInUSD: a });
       });
